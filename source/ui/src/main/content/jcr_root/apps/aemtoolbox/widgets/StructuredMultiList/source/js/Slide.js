@@ -211,6 +211,10 @@ AEM.Toolbox.Widgets.StructuredMultiList.Slide = CQ.Ext.extend(CQ.Ext.emptyFn, {
 			if (this.hardwidth) {
 				addHidden("hardwidth", this.hardwidth);
 			}
+
+			//allow lastModified stamping
+			addHidden("jcr:lastModified", "");
+			addHidden("jcr:lastModifiedBy", "");
 		} else if (this.isPersistent) {
 			//our slide is being deleted and has already been persisted to the jcr.
 			//create a hidden form field to tell sling to delete this slide.
