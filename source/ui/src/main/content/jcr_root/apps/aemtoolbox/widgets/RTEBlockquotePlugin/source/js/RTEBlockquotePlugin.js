@@ -12,13 +12,18 @@ AEM.Toolbox.Widgets.rte.plugins.RTEBlockquotePlugin = CQ.Ext.extend(CQ.form.rte.
 	 */
 	linedBlockquoteUI:null,
 
+	/**
+	 * @private
+	 */
+	unlinedBlockquoteUI:null,
+
 	constructor:function (editorKernel) {
 		AEM.Toolbox.Widgets.rte.plugins.RTEBlockquotePlugin.superclass.constructor.call(this, editorKernel);
 	},
 
 	//returns all features this plugin supports.
 	getFeatures:function () {
-		return [ "blockquote", "linedblockquote" ];
+		return [ "blockquote", "linedblockquote", "ulinedblockquote" ];
 	},
 
 	//called by rte kernel when rte is first generated.
@@ -33,6 +38,12 @@ AEM.Toolbox.Widgets.rte.plugins.RTEBlockquotePlugin = CQ.Ext.extend(CQ.form.rte.
 			this.linedBlockquoteUI = new ui.TbElement("linedblockquote", this, true, this.getTooltip("linedblockquote"));
 			//toolbar builder addElement method takes (groupId, groupSort, uiElement, uiElementSort)
 			tbGenerator.addElement("blockquote", 1200, this.linedBlockquoteUI, 110);
+		}
+
+		if (this.isFeatureEnabled("ulinedblockquote")) {
+			this.unlinedBlockquoteUI = new ui.TbElement("ulinedblockquote", this, true, this.getTooltip("ulinedblockquote"));
+			//toolbar builder addElement method takes (groupId, groupSort, uiElement, uiElementSort)
+			tbGenerator.addElement("blockquote", 1200, this.unlinedBlockquoteUI, 110);
 		}
 	},
 
@@ -49,6 +60,10 @@ AEM.Toolbox.Widgets.rte.plugins.RTEBlockquotePlugin = CQ.Ext.extend(CQ.form.rte.
 				"linedblockquote":{
 					"title":CQ.I18n.getMessage("Pull Quote"),
 					"text":CQ.I18n.getMessage("Wrap selection as a pull quote.")
+				},
+				"ulinedblockquote":{
+					"title":CQ.I18n.getMessage("Introduction"),
+					"text":CQ.I18n.getMessage("Wrap selection as an introduction quote.")
 				}
 			}
 		};
@@ -64,6 +79,9 @@ AEM.Toolbox.Widgets.rte.plugins.RTEBlockquotePlugin = CQ.Ext.extend(CQ.form.rte.
 		if (cmd == "linedblockquote" && this.linedBlockquoteUI) {
 			this.editorKernel.relayCmd("rtelinedblockquotecommand", this.linedBlockquoteUI.getExtUI().pressed);
 		}
+		if (cmd == "ulinedblockquote" && this.unlinedBlockquoteUI) {
+			this.editorKernel.relayCmd("rteunlinedblockquotecommand", this.unlinedBlockquoteUI.getExtUI().pressed);
+		}
 	},
 
 	//called when some action is performed in the rte.
@@ -75,6 +93,10 @@ AEM.Toolbox.Widgets.rte.plugins.RTEBlockquotePlugin = CQ.Ext.extend(CQ.form.rte.
 		if (this.linedBlockquoteUI && this.linedBlockquoteUI.getExtUI()) {
 			//set button state.
 			this.linedBlockquoteUI.getExtUI().toggle(this.editorKernel.queryState("rtelinedblockquotecommand", selDef));
+		}
+		if (this.unlinedBlockquoteUI && this.unlinedBlockquoteUI.getExtUI()) {
+			//set button state.
+			this.unlinedBlockquoteUI.getExtUI().toggle(this.editorKernel.queryState("rteunlinedblockquotecommand", selDef));
 		}
 	}
 });

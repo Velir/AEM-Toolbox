@@ -3,3 +3,4 @@
 RTEBlockquotePlugin.js
 RTEBlockquoteCommand.js
 RTELinedBlockquoteCommand.js
+RTEUnlinedBlockquote.js
