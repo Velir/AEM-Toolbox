@@ -2,6 +2,10 @@
 CQ.Ext.ns('AEM.Toolbox.Widgets.rte.commands');
 
 AEM.Toolbox.Widgets.rte.commands.RTEBlockquoteCommand = CQ.Ext.extend(CQ.form.rte.commands.Command, {
+	//Class to apply to inner paragraph
+	paragraphClassStyle:function(){
+		return "";
+	},
 
 	//determines if the command provided is a match for this command object.
 	isCommand:function (cmdStr) {
@@ -117,7 +121,7 @@ AEM.Toolbox.Widgets.rte.commands.RTEBlockquoteCommand = CQ.Ext.extend(CQ.form.rt
 		//get first child and process
 		var firstChild = blockquote.childNodes[0];
 		if (firstChild.tagName.toLowerCase() == "p") {
-			firstChild.className = "";
+			firstChild.className = this.paragraphClassStyle();
 		}
 	},
 
@@ -204,7 +208,7 @@ AEM.Toolbox.Widgets.rte.commands.RTEBlockquoteCommand = CQ.Ext.extend(CQ.form.rt
 
 		//get first child and check
 		var firstChild = blockquote.childNodes[0];
-		return firstChild.nodeType == 1 && firstChild.tagName.toLowerCase() == "p" && firstChild.className == "";
+		return firstChild.nodeType == 1 && firstChild.tagName.toLowerCase() == "p" && firstChild.className == this.paragraphClassStyle();
 	}
 });
 
