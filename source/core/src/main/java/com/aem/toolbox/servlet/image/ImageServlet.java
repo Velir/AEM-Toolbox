@@ -104,7 +104,9 @@ public class ImageServlet extends AbstractImageServlet {
 	}
 
 	private boolean hasValidSelectors(SlingHttpServletRequest req) {
-		return allowedSelectors.contains(req.getRequestPathInfo().getSelectorString());
+		String selectorString = req.getRequestPathInfo().getSelectorString();
+		String propertyPrefix = getImageSizePrefix(req);
+		return allowedSelectors.contains(selectorString) || ImageRatioSizeProperty.matchPattern(propertyPrefix);
 	}
 
 	@Override
@@ -179,8 +181,22 @@ public class ImageServlet extends AbstractImageServlet {
 	private Layer resizeImage(Layer layer, ImageDimensions imgDim) {
 		Layer resizedLayer;//if a width or height is provided, then we just want to size on that and not use max/min
 		if (imgDim.canBeRezised()) {
-			//if both width and height were provided, then we need to do some cropping logic
-			if (imgDim.canBeCropped()) {
+
+			//If we are resizing to a ratio, resize first then crop
+			if(imgDim.isHasNewRatio()){
+				ImageRatioSizeProperty ratioProperty = imgDim.getNewRatioDimension();
+				Dimension ratio = ratioProperty.getDimension();
+				Layer sizedLayer = ImageHelper.resize(layer, imgDim.getBase(), new Dimension(), new Dimension());
+
+				//Calculate a new height based on the width
+				int newHeight = (ratio.height * sizedLayer.getWidth()) / ratio.width;
+				ImageDimensions sizedDimension = new ImageDimensions(new Dimension(sizedLayer.getWidth(), newHeight));
+				sizedDimension.setNewRatioDimension(ratioProperty);
+
+				//Crop based on new height
+				resizedLayer = cropImage(sizedLayer, sizedDimension);
+			} else if (imgDim.canBeCropped()) {
+				//if both width and height were provided, then we need to do some cropping logic
 				resizedLayer = cropImage(layer, imgDim);
 			} else {
 				//we only have a width or height configured so we can just scale proportionally on whichever one is configured.
@@ -266,7 +282,6 @@ public class ImageServlet extends AbstractImageServlet {
 		String propertyPrefix = getImageSizePrefix(req);
 		if (allowedImageSizes.containsKey(propertyPrefix)) {
 			return buildImageDimensionFromAvailableSize(propertyPrefix);
-
 		}
 
 		return buildImageDimensionFromProperties(c, propertyPrefix);
@@ -292,16 +307,22 @@ public class ImageServlet extends AbstractImageServlet {
 		ValueMap properties = imageContext.resource.adaptTo(ValueMap.class);
 
 		//get our size properties from our resource
-		int width = properties.get(propertyPrefix + "hardwidth", 0);
-		int height = properties.get(propertyPrefix + "hardheight", 0);
-		int maxWidth = properties.get(propertyPrefix + "maxwidth", 0);
-		int maxHeight = properties.get(propertyPrefix + "maxheight", 0);
-		int minWidth = properties.get(propertyPrefix + "minwidth", 0);
-		int minHeight = properties.get(propertyPrefix + "minheight", 0);
+		int width = properties.get(propertyPrefix + "hardwidth", properties.get("hardwidth", 0));
+		int height = properties.get(propertyPrefix + "hardheight", properties.get("hardheight", 0));
+		int maxWidth = properties.get(propertyPrefix + "maxwidth", properties.get("maxwidth", 0));
+		int maxHeight = properties.get(propertyPrefix + "maxheight", properties.get("maxheight", 0));
+		int minWidth = properties.get(propertyPrefix + "minwidth", properties.get("minwidth", 0));
+		int minHeight = properties.get(propertyPrefix + "minheight", properties.get("minheight", 0));
 
 		ImageDimensions imageDim = new ImageDimensions(new Dimension(width, height));
 		imageDim.setMax(maxWidth, maxHeight);
 		imageDim.setMin(minWidth, minHeight);
+
+		if(ImageRatioSizeProperty.matchPattern(propertyPrefix)){
+			ImageRatioSizeProperty ratioDimensions = ImageRatioSizeProperty.parse(propertyPrefix);
+			imageDim.setNewRatioDimension(ratioDimensions);
+		}
+
 		return imageDim;
 	}
 

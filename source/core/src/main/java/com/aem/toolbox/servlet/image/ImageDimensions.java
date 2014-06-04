@@ -13,6 +13,7 @@ public class ImageDimensions {
 	private Dimension base;
 	private Dimension max;
 	private Dimension min;
+	private ImageRatioSizeProperty newRatioDimension = null;
 
 	public ImageDimensions(Dimension base) {
 		if (base == null) {
@@ -44,7 +45,19 @@ public class ImageDimensions {
 	}
 
 	public float getBaseAspectRatio() {
-		return base.width / base.height;
+		return isHasNewRatio()? (float)newRatioDimension.getDimension().width / newRatioDimension.getDimension().height : (float)base.width / base.height;
+	}
+
+	public ImageRatioSizeProperty getNewRatioDimension() {
+		return newRatioDimension;
+	}
+
+	public void setNewRatioDimension(ImageRatioSizeProperty newRatioDimension) {
+		this.newRatioDimension = newRatioDimension;
+	}
+
+	public boolean isHasNewRatio() {
+		return null != newRatioDimension;
 	}
 
 	public boolean canBeRezised() {

@@ -17,29 +17,30 @@ public class ImageSizeProperty {
 
 
 	public static ImageSizeProperty parse(String imageSize) {
-		checkArgument(imageSize);
+		checkArgument(imageSize, REGEX);
 
 		int parsedWidth = Integer.parseInt(StringUtils.substringBefore(imageSize, "x"));
 		int parsedHeight = Integer.parseInt(StringUtils.substringAfter(imageSize, "x"));
 
-		return new ImageSizeProperty(new Dimension(parsedWidth, parsedHeight), imageSize);
+		ImageSizeProperty imageSizeProperty = new ImageSizeProperty(new Dimension(parsedWidth, parsedHeight), imageSize);
+		return imageSizeProperty;
 	}
 
-	private static void checkArgument(String imageSize) {
+	protected static void checkArgument(String imageSize, String regEx) {
 		if (imageSize == null) {
 			throw new NullPointerException("The image size cannot be null.");
 		}
 
-		if (!matchPattern(imageSize)) {
-			throw new IllegalArgumentException(String.format("The string %s doesn't match the patter %s", imageSize, REGEX));
+		if (!matchPattern(imageSize, regEx)) {
+			throw new IllegalArgumentException(String.format("The string %s doesn't match the patter %s", imageSize, regEx));
 		}
 	}
 
-	private static boolean matchPattern(String imageSize) {
-		return imageSize.matches(REGEX);
+	public static boolean matchPattern(String imageSize, String regEx) {
+		return imageSize.matches(regEx);
 	}
 
-	private ImageSizeProperty(Dimension dimension, String property) {
+	protected ImageSizeProperty(Dimension dimension, String property) {
 		this.dimension = dimension;
 		this.property = property;
 	}
