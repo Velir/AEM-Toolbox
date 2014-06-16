@@ -180,33 +180,51 @@ public class ImageServlet extends AbstractImageServlet {
 
 	private Layer resizeImage(Layer layer, ImageDimensions imgDim) {
 		Layer resizedLayer;//if a width or height is provided, then we just want to size on that and not use max/min
-		if (imgDim.canBeRezised()) {
+		if (imgDim.canBeRezised() || imgDim.isHasNewRatio()) {
 
-			//If we are resizing to a ratio, resize first then crop
 			if(imgDim.isHasNewRatio()){
-				ImageRatioSizeProperty ratioProperty = imgDim.getNewRatioDimension();
-				Dimension ratio = ratioProperty.getDimension();
-				Layer sizedLayer = ImageHelper.resize(layer, imgDim.getBase(), new Dimension(), new Dimension());
-
-				//Calculate a new height based on the width
-				int newHeight = (ratio.height * sizedLayer.getWidth()) / ratio.width;
-				ImageDimensions sizedDimension = new ImageDimensions(new Dimension(sizedLayer.getWidth(), newHeight));
-				sizedDimension.setNewRatioDimension(ratioProperty);
-
-				//Crop based on new height
-				resizedLayer = cropImage(sizedLayer, sizedDimension);
+				resizedLayer = cropByRatio(layer, imgDim);
 			} else if (imgDim.canBeCropped()) {
 				//if both width and height were provided, then we need to do some cropping logic
 				resizedLayer = cropImage(layer, imgDim);
 			} else {
 				//we only have a width or height configured so we can just scale proportionally on whichever one is configured.
-				resizedLayer = ImageHelper.resize(layer, imgDim.getBase(), new Dimension(), new Dimension());
+				resizedLayer = resizeByHardDimensions(layer, imgDim);
 			}
 		} else {
 			//we don't have a width or height so lets use any max/min values that were configured.
-			resizedLayer = ImageHelper.resize(layer, new Dimension(), imgDim.getMin(), imgDim.getMax());
+			resizedLayer = resizeByMinMax(layer, imgDim);
 		}
 		return resizedLayer;
+	}
+
+	private Layer resizeByHardDimensions(Layer layer, ImageDimensions imgDim) {
+		return ImageHelper.resize(layer, imgDim.getBase(), new Dimension(), new Dimension());
+	}
+
+	private Layer resizeByMinMax(Layer layer, ImageDimensions imgDim) {
+		return ImageHelper.resize(layer, new Dimension(), imgDim.getMin(), imgDim.getMax());
+	}
+
+	private Layer cropByRatio(Layer layer, ImageDimensions imgDim) {
+		//If we are resizing to a ratio, resize first then crop
+		Layer resizedLayer;ImageRatioSizeProperty ratioProperty = imgDim.getNewRatioDimension();
+		Dimension ratio = ratioProperty.getDimension();
+		Layer sizedLayer;
+		if(imgDim.canBeRezised()){
+			sizedLayer = resizeByHardDimensions(layer, imgDim);
+		} else {
+			//we don't have a width or height so lets use any max/min values that were configured.
+			sizedLayer = resizeByMinMax(layer, imgDim);
+		}
+
+		//Calculate a new height based on the width
+		int newHeight = (ratio.height * sizedLayer.getWidth()) / ratio.width;
+		ImageDimensions sizedDimension = new ImageDimensions(new Dimension(sizedLayer.getWidth(), newHeight));
+		sizedDimension.setNewRatioDimension(ratioProperty);
+
+		//Crop based on new height
+		return cropImage(sizedLayer, sizedDimension);
 	}
 
 	private Layer cropImage(Layer layer, ImageDimensions imgDim) {
@@ -220,7 +238,7 @@ public class ImageServlet extends AbstractImageServlet {
 
 		//if we already have the same aspect, resize as is
 		if (imageAspect == desiredAspect) {
-			resizedLayer = ImageHelper.resize(layer, imgDim.getBase(), new Dimension(), new Dimension());
+			resizedLayer = resizeByHardDimensions(layer, imgDim);
 		} else {
 			//if our image aspect is less than the desired, size on width and crop by height
 			if (imageAspect < desiredAspect) {
