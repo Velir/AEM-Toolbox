@@ -16,6 +16,10 @@
 	<description>AEM Toolbox core module.</description>
 	<packaging>bundle</packaging>
 
+	<properties>
+		<root.dir>${basedir}/..</root.dir>
+	</properties>
+
 	<dependencies>
 		<!-- Adobe CQ -->
 		<dependency>
@@ -138,6 +142,10 @@
 				</configuration>
 			</plugin>
 
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>properties-maven-plugin</artifactId>
+			</plugin>
 		</plugins>
 	</build>
 </project>
