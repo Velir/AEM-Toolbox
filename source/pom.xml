@@ -1,19 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.aem.toolbox</groupId>
-    <artifactId>aem-toolbox-parent</artifactId>
-	<packaging>pom</packaging>
+	<groupId>com.aem.toolbox</groupId>
+	<artifactId>aem-toolbox-parent</artifactId>
 	<version>1.0-SNAPSHOT</version>
 	<name>AEM Toolbox Parent</name>
 	<description>Parent pom for AEM Toolbox module</description>
-        <url>https://github.com/Velir/AEM-Toolbox</url>
-        <scm>
-                <developerConnection>scm:git:https://github.com/Velir/AEM-Toolbox.git</developerConnection>
-        </scm>
+	<url>https://github.com/Velir/AEM-Toolbox</url>
+	<packaging>pom</packaging>
+
+	<issueManagement>
+		<url>https://github.com/Velir/AEM-Toolbox/issues</url>
+		<system>GitHub Issues</system>
+	</issueManagement>
+
+	<licenses>
+		<license>
+			<name>MIT License</name>
+			<url>http://www.opensource.org/licenses/mit-license.php</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<scm>
+		<connection>scm:git:git@github.com:Velir/AEM-Toolbox.git</connection>
+		<developerConnection>scm:git:git@github.com:Velir/AEM-Toolbox.git</developerConnection>
+		<tag>HEAD</tag>
+		<url>https://github.com/Velir/AEM-Toolbox</url>
+	</scm>
+
+	<developers>
+		<developer>
+			<email>sebastien.bernard@velir.com</email>
+			<name>Sebastien Bernard</name>
+			<url>https://github.com/sebernard</url>
+			<roles>
+				<role>Developer</role>
+			</roles>
+			<organization>Velir</organization>
+			<organizationUrl>www.velir.com</organizationUrl>
+		</developer>
+	</developers>
+
 	<modules>
 		<module>core</module>
 		<module>ui</module>
@@ -27,36 +58,6 @@
 		<aem.admin.username>admin</aem.admin.username>
 		<aem.admin.password>admin</aem.admin.password>
 	</properties>
-
-	<repositories>
-		<repository>
-			<id>adobe-public-releases</id>
-			<name>Adobe Basel Public Repository</name>
-			<url>http://repo.adobe.com/nexus/content/groups/public</url>
-			<releases>
-				<enabled>true</enabled>
-				<updatePolicy>never</updatePolicy>
-			</releases>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
-	</repositories>
-
-	<pluginRepositories>
-		<pluginRepository>
-			<id>adobe-public-releases</id>
-			<name>Adobe Basel Public Repository</name>
-			<url>http://repo.adobe.com/nexus/content/groups/public</url>
-			<releases>
-				<enabled>true</enabled>
-				<updatePolicy>never</updatePolicy>
-			</releases>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</pluginRepository>
-	</pluginRepositories>
 
 	<dependencyManagement>
 		<dependencies>
@@ -239,23 +240,16 @@
 					<artifactId>maven-crx-plugin</artifactId>
 					<version>1.0.3</version>
 				</plugin>
-                                <plugin>
-                                    <groupId>org.apache.maven.plugins</groupId>
-                                    <artifactId>maven-release-plugin</artifactId>
-                                    <configuration>
-                                        <localCheckout>true</localCheckout>
-                                    </configuration>
-                                </plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-release-plugin</artifactId>
+					<configuration>
+						<localCheckout>true</localCheckout>
+						<autoVersionSubmodules>true</autoVersionSubmodules>
+					</configuration>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 	</build>
-        <distributionManagement>
-            <repository>
-                        <uniqueVersion>false</uniqueVersion>
-                        <id>archiva-velir-internal</id>
-                        <name>Velir Internal Archiva Repository</name>
-                        <url>http://archiva.rwjf.velir.com:8080/archiva/repository/internal</url>
-                        <layout>default</layout>
-            </repository>
-        </distributionManagement>
 </project>
