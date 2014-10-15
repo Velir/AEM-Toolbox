@@ -30,18 +30,18 @@
 		<url>https://github.com/Velir/AEM-Toolbox</url>
 	</scm>
 
-	<!--<distributionManagement>-->
-		<!--<repository>-->
-			<!--<id>deploy-velir-internal</id>-->
-			<!--<name>Velir Internal Archiva Repository</name>-->
-			<!--<url>http://archiva.rwjf.velir.com:8080/archiva/repository/internal</url>-->
-		<!--</repository>-->
-		<!--<snapshotRepository>-->
-			<!--<id>deploy-velir-snapshots</id>-->
-			<!--<name>Velir Internal Archiva Repository</name>-->
-			<!--<url>http://archiva.rwjf.velir.com:8080/archiva/repository/snapshots</url>-->
-		<!--</snapshotRepository>-->
-	<!--</distributionManagement>-->
+	<distributionManagement>
+		<repository>
+			<id>deploy-velir-internal</id>
+			<name>Velir Internal Archiva Repository</name>
+			<url>http://archiva.rwjf.velir.com:8080/archiva/repository/internal</url>
+		</repository>
+		<snapshotRepository>
+			<id>deploy-velir-snapshots</id>
+			<name>Velir Internal Archiva Repository</name>
+			<url>http://archiva.rwjf.velir.com:8080/archiva/repository/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
 
 	<developers>
 		<developer>
