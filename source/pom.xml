@@ -30,18 +30,18 @@
 		<url>https://github.com/Velir/AEM-Toolbox</url>
 	</scm>
 
-	<distributionManagement>
-		<repository>
-			<id>deploy-velir-internal</id>
-			<name>Velir Internal Archiva Repository</name>
-			<url>http://archiva.rwjf.velir.com:8080/archiva/repository/internal</url>
-		</repository>
-		<snapshotRepository>
-			<id>deploy-velir-snapshots</id>
-			<name>Velir Internal Archiva Repository</name>
-			<url>http://archiva.rwjf.velir.com:8080/archiva/repository/snapshots</url>
-		</snapshotRepository>
-	</distributionManagement>
+	<!--<distributionManagement>-->
+		<!--<repository>-->
+			<!--<id>deploy-velir-internal</id>-->
+			<!--<name>Velir Internal Archiva Repository</name>-->
+			<!--<url>http://archiva.rwjf.velir.com:8080/archiva/repository/internal</url>-->
+		<!--</repository>-->
+		<!--<snapshotRepository>-->
+			<!--<id>deploy-velir-snapshots</id>-->
+			<!--<name>Velir Internal Archiva Repository</name>-->
+			<!--<url>http://archiva.rwjf.velir.com:8080/archiva/repository/snapshots</url>-->
+		<!--</snapshotRepository>-->
+	<!--</distributionManagement>-->
 
 	<developers>
 		<developer>
@@ -65,7 +65,10 @@
 		<project.build.jdk>1.6</project.build.jdk>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<root.dir>${basedir}</root.dir>
-		<maven.config.dir>${root.dir}/maven-config</maven.config.dir>
+		<aem.application.server>localhost</aem.application.server>
+		<aem.application.port>4502</aem.application.port>
+		<aem.admin.username>admin</aem.admin.username>
+		<aem.admin.password>admin</aem.admin.password>
 	</properties>
 
 	<dependencyManagement>
@@ -259,26 +262,6 @@
 					</configuration>
 				</plugin>
 
-				<plugin>
-					<groupId>org.codehaus.mojo</groupId>
-					<artifactId>properties-maven-plugin</artifactId>
-					<version>1.0-alpha-2</version>
-					<executions>
-						<execution>
-							<phase>validate</phase>
-							<goals>
-								<goal>read-project-properties</goal>
-							</goals>
-							<configuration>
-								<files>
-									<file>${maven.config.dir}/properties/common.properties</file>
-									<file>${maven.config.dir}/properties/${serverName}.properties</file>
-								</files>
-								<quiet>true</quiet>
-							</configuration>
-						</execution>
-					</executions>
-				</plugin>
 			</plugins>
 		</pluginManagement>
 	</build>
