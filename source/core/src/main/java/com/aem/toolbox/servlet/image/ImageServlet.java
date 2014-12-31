@@ -238,7 +238,8 @@ public class ImageServlet extends AbstractImageServlet {
 
 		//if we already have the same aspect, resize as is
 		if (imageAspect == desiredAspect) {
-			resizedLayer = resizeByHardDimensions(layer, imgDim);
+			layer.resize(imgDim.getBase().width, imgDim.getBase().height);
+			resizedLayer = layer;
 		} else {
 			//if our image aspect is less than the desired, size on width and crop by height
 			if (imageAspect < desiredAspect) {
