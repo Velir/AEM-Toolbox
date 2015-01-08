@@ -199,16 +199,21 @@ public class ImageServlet extends AbstractImageServlet {
 	}
 
 	private Layer resizeByHardDimensions(Layer layer, ImageDimensions imgDim) {
-		return ImageHelper.resize(layer, imgDim.getBase(), new Dimension(), new Dimension());
+		return resize(layer, imgDim.getBase(), new Dimension(), new Dimension());
 	}
 
 	private Layer resizeByMinMax(Layer layer, ImageDimensions imgDim) {
-		return ImageHelper.resize(layer, new Dimension(), imgDim.getMin(), imgDim.getMax());
+		return resize(layer, new Dimension(), imgDim.getMin(), imgDim.getMax());
+	}
+
+	private static Layer resize(Layer layer, Dimension d, Dimension min, Dimension max){
+		Layer resizedLayer =  ImageHelper.resize(layer, d, min, max);
+		return null != resizedLayer? resizedLayer : layer;
 	}
 
 	private Layer cropByRatio(Layer layer, ImageDimensions imgDim) {
 		//If we are resizing to a ratio, resize first then crop
-		Layer resizedLayer;ImageRatioSizeProperty ratioProperty = imgDim.getNewRatioDimension();
+		ImageRatioSizeProperty ratioProperty = imgDim.getNewRatioDimension();
 		Dimension ratio = ratioProperty.getDimension();
 		Layer sizedLayer;
 		if(imgDim.canBeRezised()){
@@ -244,7 +249,7 @@ public class ImageServlet extends AbstractImageServlet {
 			//if our image aspect is less than the desired, size on width and crop by height
 			if (imageAspect < desiredAspect) {
 				//resize on width
-				resizedLayer = ImageHelper.resize(layer, new Dimension(imgDim.getBase().width, 0), new Dimension(), new Dimension());
+				resizedLayer = resize(layer, new Dimension(imgDim.getBase().width, 0), new Dimension(), new Dimension());
 
 				//we need to make sure we have a layer to work with so if our resized layer is null, lets go back to our original layer
 				if (resizedLayer == null) {
@@ -258,7 +263,7 @@ public class ImageServlet extends AbstractImageServlet {
 				resizedLayer.crop(new Rectangle2D.Double(0, cropSize, resizedLayer.getWidth(), resizedLayer.getHeight() - (cropSize * 2)));
 			} else {
 				//else lets size on height and crop by width
-				resizedLayer = ImageHelper.resize(layer, new Dimension(0, imgDim.getBase().height), new Dimension(), new Dimension());
+				resizedLayer = resize(layer, new Dimension(0, imgDim.getBase().height), new Dimension(), new Dimension());
 
 				//we need to make sure we have a layer to work with so if our resized layer is null, lets go back to our original layer
 				if (resizedLayer == null) {
