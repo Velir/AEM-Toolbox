@@ -4,6 +4,8 @@ package com.aem.toolbox.servlet.image;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * ImageSizeTest -
@@ -12,7 +14,7 @@ import static org.junit.Assert.assertEquals;
  * @version $Id$
  */
 public class ImageSizePropertyTest {
-	@Test(expected = NullPointerException.class)
+	@Test(expected = IllegalArgumentException.class)
 	public void testParseNull(){
 		ImageSizeProperty.parse(null);
 	}
@@ -32,7 +34,14 @@ public class ImageSizePropertyTest {
 		ImageSizeProperty imageSize = ImageSizeProperty.parse("10x20");
 		assertEquals(10, imageSize.getDimension().width);
 		assertEquals(20, imageSize.getDimension().height);
+		assertFalse(imageSize.isLegacyAspectRatio());
 	}
 
-
+	@Test
+	public void testParseRatio() throws Exception {
+		ImageSizeProperty imageSize = ImageSizeProperty.parse("16_9");
+		assertEquals(16, imageSize.getDimension().width);
+		assertEquals(9, imageSize.getDimension().height);
+		assertTrue(imageSize.isLegacyAspectRatio());
+	}
 }
