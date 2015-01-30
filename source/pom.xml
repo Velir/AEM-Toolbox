@@ -30,6 +30,14 @@
 		<url>https://github.com/Velir/AEM-Toolbox</url>
 	</scm>
 
+	<repositories>
+		<repository>
+			<id>adobe</id>
+			<name>adobe repo</name>
+			<url>https://repo.adobe.com/nexus/content/groups/public</url>
+		</repository>
+	</repositories>
+
 	<distributionManagement>
 		<repository>
 			<id>deploy-velir-internal</id>
