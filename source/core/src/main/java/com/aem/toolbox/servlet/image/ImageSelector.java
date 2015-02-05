@@ -8,6 +8,8 @@ package com.aem.toolbox.servlet.image;
  */
 public enum ImageSelector {
 	NO_SIZE("no.size.img"),
+	CROP_SIZE("crop.size.img"),
+	BOUND_SIZE("bound.size.img"),
 	SIZE("size.img");
 
 	private final String value;
