@@ -71,7 +71,9 @@ public class ImageServlet extends AbstractImageServlet {
 	private boolean hasValidSelectors(SlingHttpServletRequest req) {
 		String propertyPrefix = getImageSizePrefix(req);
 		// either it's a legacy request and anything goes, or valid dimensions are required
-		return getImageSelector(req) == ImageSelector.SIZE || ImageSizeProperty.isValid(propertyPrefix);
+		return getImageSelector(req) == ImageSelector.SIZE
+			|| getImageSelector(req) == ImageSelector.NO_SIZE
+			|| ImageSizeProperty.isValid(propertyPrefix);
 	}
 
 	@Override
@@ -106,7 +108,7 @@ public class ImageServlet extends AbstractImageServlet {
 			// segregate handling legacy requests into its own special method to keep the main logic pure and clean
 			if (imageSelector == ImageSelector.SIZE) {
 				handleLegacyRequest(layer, currentDimensions, imageSizeString);
-			} else {
+			} else if (imageSelector != ImageSelector.NO_SIZE) {
 				ImageSizeProperty imageSizeProperty = ImageSizeProperty.parse(imageSizeString);
 				ImageDimensions idealDimensions = new ImageDimensions(imageSizeProperty.getDimension());
 				ImageDimensions newDimensions;
