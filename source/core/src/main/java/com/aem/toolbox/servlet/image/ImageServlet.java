@@ -135,25 +135,28 @@ public class ImageServlet extends AbstractImageServlet {
 	}
 
 	private void handleLegacyRequest(final Layer layer, final ImageDimensions currentDimensions, String imageSizeString) {
-		ImageDimensions idealDimensions;
 		ImageDimensions newDimensions;
 		// see if we were passed in explicit sizing parameters
 		if (ImageSizeProperty.isValid(imageSizeString)) {
 			ImageSizeProperty imageSizeProperty = ImageSizeProperty.parse(imageSizeString);
-			idealDimensions = new ImageDimensions(imageSizeProperty.getDimension());
+			ImageDimensions idealDimensions = new ImageDimensions(imageSizeProperty.getDimension());
 
 			// if we have a legacy aspect ratio, we want to scale the aspect ratio dimensions up to be an actual width/height
 			if (imageSizeProperty.isLegacyAspectRatio()) {
 				idealDimensions = idealDimensions.scaleToWidth((int) ImageDimensions.RWJF_MAGICAL_DEFAULT.getBase().getWidth());
 			}
 
+			// scale and crop
+			newDimensions = currentDimensions.resizeToOutsideDesiredDimensions(idealDimensions);
+			layer.resize(newDimensions.getBase().width, newDimensions.getBase().height);
+			layer.crop(newDimensions.getCrop(idealDimensions));
+
 		} else {
-			idealDimensions = ImageDimensions.RWJF_MAGICAL_DEFAULT;
+			// just scale with current aspect ratio to be within default bounding area
+			newDimensions = currentDimensions.resizeToInsideDesiredDimensions(ImageDimensions.RWJF_MAGICAL_DEFAULT);
+			layer.resize(newDimensions.getBase().width, newDimensions.getBase().height);
 		}
 
-		newDimensions = currentDimensions.resizeToOutsideDesiredDimensions(idealDimensions);
-		layer.resize(newDimensions.getBase().width, newDimensions.getBase().height);
-		layer.crop(newDimensions.getCrop(idealDimensions));
 	}
 
 	private void setMimeTypeAndWriteNewLayer(SlingHttpServletResponse resp, Layer layer, Image image) throws RepositoryException, IOException {
