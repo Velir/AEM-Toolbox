@@ -6,6 +6,8 @@ import javax.jcr.RepositoryException;
 import javax.servlet.http.HttpServletResponse;
 
 import com.day.cq.commons.ImageHelper;
+import com.day.cq.dam.api.Asset;
+import com.day.cq.dam.api.Rendition;
 import com.day.cq.wcm.commons.AbstractImageServlet;
 import com.day.cq.wcm.foundation.Image;
 import com.day.image.Layer;
@@ -89,7 +91,12 @@ public class ImageServlet extends AbstractImageServlet {
 	                          ImageContext c, Layer layer)
 		throws IOException, RepositoryException {
 
-		Image image = new Image(c.resource);
+		Resource res = c.resource;
+		Image image = new Image(res);
+		if(isAsset(res) || isRendition(res)){
+			image.setFileReference(image.getPath());
+		}
+
 		if (!image.hasContent()) {
 			resp.sendError(HttpServletResponse.SC_NOT_FOUND);
 			return;
@@ -132,6 +139,14 @@ public class ImageServlet extends AbstractImageServlet {
 
 		setMimeTypeAndWriteNewLayer(resp, layer, image);
 		resp.flushBuffer();
+	}
+
+	private boolean isRendition(Resource res) {
+		return res.adaptTo(Rendition.class) != null;
+	}
+
+	private boolean isAsset(Resource res) {
+		return res.adaptTo(Asset.class) != null;
 	}
 
 	private void handleLegacyRequest(final Layer layer, final ImageDimensions currentDimensions, String imageSizeString) {

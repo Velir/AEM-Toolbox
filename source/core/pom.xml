@@ -31,6 +31,11 @@
 		</dependency>
 
 		<dependency>
+			<groupId>com.day.cq.dam</groupId>
+			<artifactId>cq-dam-api</artifactId>
+		</dependency>
+
+		<dependency>
 			<groupId>com.day.cq.wcm</groupId>
 			<artifactId>cq-wcm-api</artifactId>
 		</dependency>
