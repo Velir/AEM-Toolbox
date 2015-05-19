@@ -53,7 +53,7 @@ AEM.Toolbox.Widgets.YoutubeDialog = CQ.Ext.extend(CQ.Dialog, {
         if(this.dataview.getSelectionCount() == 1){
             var selections = this.dataview.getSelectedRecords();
             var selected = selections[0];
-            retId = selected.json.id;
+            retId = selected.json.contentDetails.videoId;
         }
         return retId;
     },
@@ -63,7 +63,7 @@ AEM.Toolbox.Widgets.YoutubeDialog = CQ.Ext.extend(CQ.Dialog, {
         if(this.dataview.getSelectionCount() == 1){
             var selections = this.dataview.getSelectedRecords();
             var selected = selections[0];
-            retTitle = selected.json.title;
+            retTitle = selected.json.snippet.title;
         }
         return retTitle;
     },
@@ -91,15 +91,12 @@ AEM.Toolbox.Widgets.YoutubeDialog = CQ.Ext.extend(CQ.Dialog, {
 
         this.jsonStore = new CQ.Ext.data.JsonStore({
             id: 'jsonStore',
-            idProperty: 'id',
-            totalProperty: 'data.totalItems',
-            root: 'data.items',
-            fields: [ 'id',
-                'category',
-                'duration',
-                'title',
-                'description',
-                {name: 'thumbnail'}
+            idProperty: 'contentDetails.videoId',
+            totalProperty: 'pageInfo.totalResults',
+            root: 'items',
+            fields: [
+                {name: 'contentDetails'},
+                {name: 'snippet'}
             ],
             autoLoad: false,
             proxy: proxy,
@@ -113,18 +110,15 @@ AEM.Toolbox.Widgets.YoutubeDialog = CQ.Ext.extend(CQ.Dialog, {
                 tpl: new CQ.Ext.XTemplate(
                     '<div id="vidResults">',
                     '<tpl for=".">',
-                    '   <div class="vid-wrapper" id="{id}">',
-                    '       <div class="vid-title">{title}</div>',
+                    '   <div class="vid-wrapper" id="{[values.contentDetails.videoId]}">',
+                    '       <div class="vid-title">{[values.snippet.title]}</div>',
                     '       <table border="0" class="vid-thumb-text-wrapper"><tbody>',
                     '       <tr>',
                     '          <td class="vid-thumb">',
-                    '              <tpl for="thumbnail">',
-                    '                  <img src="{sqDefault}">',
-                    '              </tpl>',
+                    '              <img src="{[values.snippet.thumbnails.default.url]}">',
                     '          </td>',
                     '          <td class="vid-cat-desc-wrapper">',
-                    '             <div class="vid-cat">{[Math.floor(values.duration/60)]} min {[values.duration % 60]} sec</div>',
-                    '             <div class="vid-desc">{[(values.description.length > 300)? values.description.substring(0, 300) + "..." : values.description]}</div>',
+                    '             <div class="vid-desc">{[(values.snippet.description.length > 300)? values.snippet.description.substring(0, 300) + "..." : values.snippet.description]}</div>',
                     '          </td>',
                     '       </tr>',
                     '       </tbody></table>',

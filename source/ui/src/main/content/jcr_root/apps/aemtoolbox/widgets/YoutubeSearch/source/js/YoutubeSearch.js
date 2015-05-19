@@ -9,6 +9,18 @@ AEM.Toolbox.Widgets.YoutubeSearch = CQ.Ext.extend(CQ.Ext.form.TriggerField, {
     youtubeUser: '',
 
 	/**
+	 * @cfg {String} apiKey
+	 * API Key to retrieve video information
+	 */
+    apiKey: '',
+
+	/**
+	 * @cfg {String} playlistId
+	 * API Key to retrieve video information
+	 */
+	playlistId: '',
+
+	/**
 	 * @cfg {String} fieldDescription
 	 * Default description for YouTube Search
 	 */
@@ -60,10 +72,23 @@ AEM.Toolbox.Widgets.YoutubeSearch = CQ.Ext.extend(CQ.Ext.form.TriggerField, {
                 }
                 this.hide();
             }
+
+			var channelList = null;
+			if(this.playlistId){
+				channelList = this.playlistId;
+			} else{
+				var channelUrl = "https://www.googleapis.com/youtube/v3/channels?key=" + this.apiKey + "&part=contentDetails&forUsername=" + this.youtubeUser;
+				var channelInfo = CQ.HTTP.eval(channelUrl);
+
+				channelList = channelInfo.items[0].contentDetails.relatedPlaylists.uploads;
+			}
+
+
+			var videoUrl = "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet,contentDetails&maxResults=50&playlistId=" + channelList + "&key=" + this.apiKey;
             var dialogConfig = CQ.Util.applyDefaults(this.dialogCfg, {
                 ok: okHandler,
                 videoSearchField: this,
-                url: 'https://gdata.youtube.com/feeds/api/users/' + this.youtubeUser +'/uploads?v=2&alt=jsonc',
+                url: videoUrl,
                 "buttons": CQ.Dialog.OKCANCEL
             });
 

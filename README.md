@@ -161,6 +161,8 @@ Allows content authors to search a YouTube channel for embedding videos into a c
 
 * Configure your component dialog so it contains a widget with xtype 'youtubesearch'.
 * youtubeUser:  Allows us to configure a user for limiting what videos are searched against.
+* apiKey: Youtube API Key
+* playlistId: ID of the playlist to pull videos from. Default is the configured user's uploads playlist
 
 ```
 <youtubevideo
@@ -168,6 +170,8 @@ Allows content authors to search a YouTube channel for embedding videos into a c
 	fieldLabel="Youtube Video"
 	name="./videoId"
 	youtubeUser=""
+	apiKey=""
+	playlistId=""
 	xtype="youtubesearch"/>
 ```
 
