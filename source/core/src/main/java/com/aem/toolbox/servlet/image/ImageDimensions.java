@@ -12,7 +12,7 @@ import java.awt.geom.Rectangle2D;
  */
 public class ImageDimensions {
 	// for legacy purposes
-	public static final ImageDimensions RWJF_MAGICAL_DEFAULT = new ImageDimensions(new Dimension(220, 220));
+	public static final ImageDimensions DEFAULT_IMAGE_DIMENSIONS = new ImageDimensions(new Dimension(220, 220));
 
 	private Dimension base;
 

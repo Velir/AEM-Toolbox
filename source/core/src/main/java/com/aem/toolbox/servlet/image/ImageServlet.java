@@ -33,7 +33,7 @@ import org.slf4j.LoggerFactory;
  * consider removing device/size properties. These issues are probably better determined in CSS
  */
 
-@SlingServlet(resourceTypes = {"sling/servlet/default"}, selectors = {"no.size.img", "crop.size.img", "bound.size.img", "size.img"})
+@SlingServlet(resourceTypes = {"sling/servlet/default"}, selectors = {"no.size.img", "crop.size.img", "bound.size.img", "max.size.img", "size.img"})
 @Properties(value = {
 	@org.apache.felix.scr.annotations.Property(name = ImageServlet.PAGE_404, value = "", label = "Default 404 page", propertyPrivate = false),
 	@org.apache.felix.scr.annotations.Property(name = ImageServlet.VALID_DEVICES,  cardinality = Integer.MAX_VALUE, value = {}, propertyPrivate = false, label = "Device selectors", description = "Specify the supported device selector like \"phone\", \"tablet\""),
@@ -129,6 +129,16 @@ public class ImageServlet extends AbstractImageServlet {
 					case BOUND_SIZE:
 						newDimensions = currentDimensions.resizeToInsideDesiredDimensions(idealDimensions);
 						layer.resize(newDimensions.getBase().width, newDimensions.getBase().height);
+						break;
+					case MAX_BOUND:
+						if(layer.getHeight() > idealDimensions.getBase().height || layer.getWidth() > idealDimensions.getBase().width){
+							newDimensions = currentDimensions.resizeToInsideDesiredDimensions(idealDimensions);
+							layer.resize(newDimensions.getBase().width, newDimensions.getBase().height);
+						}
+						break;
+						
+						
+
 					default:
 						// we're good, leave image as-is
 				}
@@ -158,7 +168,7 @@ public class ImageServlet extends AbstractImageServlet {
 
 			// if we have a legacy aspect ratio, we want to scale the aspect ratio dimensions up to be an actual width/height
 			if (imageSizeProperty.isLegacyAspectRatio()) {
-				idealDimensions = idealDimensions.scaleToWidth((int) ImageDimensions.RWJF_MAGICAL_DEFAULT.getBase().getWidth());
+				idealDimensions = idealDimensions.scaleToWidth((int) ImageDimensions.DEFAULT_IMAGE_DIMENSIONS.getBase().getWidth());
 			}
 
 			// scale and crop
@@ -168,7 +178,7 @@ public class ImageServlet extends AbstractImageServlet {
 
 		} else {
 			// just scale with current aspect ratio to be within default bounding area
-			newDimensions = currentDimensions.resizeToInsideDesiredDimensions(ImageDimensions.RWJF_MAGICAL_DEFAULT);
+			newDimensions = currentDimensions.resizeToInsideDesiredDimensions(ImageDimensions.DEFAULT_IMAGE_DIMENSIONS);
 			layer.resize(newDimensions.getBase().width, newDimensions.getBase().height);
 		}
 
