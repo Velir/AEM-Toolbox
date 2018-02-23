@@ -33,11 +33,11 @@ import org.slf4j.LoggerFactory;
  * consider removing device/size properties. These issues are probably better determined in CSS
  */
 
-@SlingServlet(resourceTypes = {"sling/servlet/default"}, selectors = {"no.size.img", "crop.size.img", "bound.size.img", "max.size.img", "size.img"})
+@SlingServlet(resourceTypes = {"sling/servlet/default"}, selectors = {"no.size.img", "crop.size.img", "bound.size.img", "bound.width.size.img", "max.size.img", "size.img"})
 @Properties(value = {
-	@org.apache.felix.scr.annotations.Property(name = ImageServlet.PAGE_404, value = "", label = "Default 404 page", propertyPrivate = false),
-	@org.apache.felix.scr.annotations.Property(name = ImageServlet.VALID_DEVICES,  cardinality = Integer.MAX_VALUE, value = {}, propertyPrivate = false, label = "Device selectors", description = "Specify the supported device selector like \"phone\", \"tablet\""),
-	@org.apache.felix.scr.annotations.Property(name = ImageServlet.VALID_SIZES, cardinality = Integer.MAX_VALUE, value = {}, propertyPrivate = false,  label = "Size selectors", description = "Specify the sizes supported by the servlet. The format is WIDTHxHEIGHT")
+		@org.apache.felix.scr.annotations.Property(name = ImageServlet.PAGE_404, value = "", label = "Default 404 page", propertyPrivate = false),
+		@org.apache.felix.scr.annotations.Property(name = ImageServlet.VALID_DEVICES,  cardinality = Integer.MAX_VALUE, value = {}, propertyPrivate = false, label = "Device selectors", description = "Specify the supported device selector like \"phone\", \"tablet\""),
+		@org.apache.felix.scr.annotations.Property(name = ImageServlet.VALID_SIZES, cardinality = Integer.MAX_VALUE, value = {}, propertyPrivate = false,  label = "Size selectors", description = "Specify the sizes supported by the servlet. The format is WIDTHxHEIGHT")
 })
 public class ImageServlet extends AbstractImageServlet {
 	private final static Logger LOG = LoggerFactory.getLogger(ImageServlet.class);
@@ -74,22 +74,22 @@ public class ImageServlet extends AbstractImageServlet {
 		String propertyPrefix = getImageSizePrefix(req);
 		// either it's a legacy request and anything goes, or valid dimensions are required
 		return getImageSelector(req) == ImageSelector.SIZE
-			|| getImageSelector(req) == ImageSelector.NO_SIZE
-			|| ImageSizeProperty.isValid(propertyPrefix);
+				|| getImageSelector(req) == ImageSelector.NO_SIZE
+				|| ImageSizeProperty.isValid(propertyPrefix);
 	}
 
 	@Override
 	protected Layer createLayer(ImageContext c)
-		throws RepositoryException, IOException {
+			throws RepositoryException, IOException {
 		// don't create the layer yet. handle everything later
 		return null;
 	}
 
 	@Override
 	protected void writeLayer(SlingHttpServletRequest req,
-	                          SlingHttpServletResponse resp,
-	                          ImageContext c, Layer layer)
-		throws IOException, RepositoryException {
+							  SlingHttpServletResponse resp,
+							  ImageContext c, Layer layer)
+			throws IOException, RepositoryException {
 
 		Resource res = c.resource;
 		Image image = new Image(res);
@@ -116,7 +116,8 @@ public class ImageServlet extends AbstractImageServlet {
 			if (imageSelector == ImageSelector.SIZE) {
 				handleLegacyRequest(layer, currentDimensions, imageSizeString);
 			} else if (imageSelector != ImageSelector.NO_SIZE) {
-				ImageSizeProperty imageSizeProperty = ImageSizeProperty.parse(imageSizeString);
+				ImageSizeProperty imageSizeProperty = null;
+				imageSizeProperty = imageSelector == imageSelector.BOUND_WIDTH_SIZE ? ImageSizeProperty.parseSingleWidthDimension(imageSizeString) : ImageSizeProperty.parse(imageSizeString);
 				ImageDimensions idealDimensions = new ImageDimensions(imageSizeProperty.getDimension());
 				ImageDimensions newDimensions;
 
@@ -130,14 +131,18 @@ public class ImageServlet extends AbstractImageServlet {
 						newDimensions = currentDimensions.resizeToInsideDesiredDimensions(idealDimensions);
 						layer.resize(newDimensions.getBase().width, newDimensions.getBase().height);
 						break;
+					case BOUND_WIDTH_SIZE:
+						newDimensions = currentDimensions.resizeToInsideDesiredDimensions(idealDimensions);
+						layer.resize(newDimensions.getBase().width, newDimensions.getBase().height);
+						break;
 					case MAX_BOUND:
 						if(layer.getHeight() > idealDimensions.getBase().height || layer.getWidth() > idealDimensions.getBase().width){
 							newDimensions = currentDimensions.resizeToInsideDesiredDimensions(idealDimensions);
 							layer.resize(newDimensions.getBase().width, newDimensions.getBase().height);
 						}
 						break;
-						
-						
+
+
 
 					default:
 						// we're good, leave image as-is
