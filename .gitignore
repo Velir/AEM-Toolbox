@@ -3,6 +3,7 @@
 *.ipr
 *.iws
 .idea/
+atlassian-ide-plugin.xml
 
 # Maven
 target/

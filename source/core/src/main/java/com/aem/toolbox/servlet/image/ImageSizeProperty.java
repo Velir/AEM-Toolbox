@@ -1,5 +1,6 @@
 package com.aem.toolbox.servlet.image;
 
+import java.awt.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
