@@ -1,5 +1,10 @@
 //create widget namespace
-CQ.Ext.ns('AEM.Toolbox.Widgets.rte.plugins');
+// CQ.Ext.ns('AEM.Toolbox.Widgets.rte.plugins');
+var AEM = AEM || {};
+AEM.Toolbox = AEM.Toolbox || {};
+AEM.Toolbox.Widgets = {};
+AEM.Toolbox.Widgets.rte = {};
+AEM.Toolbox.Widgets.rte.plugins = {};
 
 AEM.Toolbox.Widgets.rte.plugins.RTEBlockquotePlugin = CQ.Ext.extend(CQ.form.rte.plugins.Plugin, {
 	/**
@@ -102,4 +107,4 @@ AEM.Toolbox.Widgets.rte.plugins.RTEBlockquotePlugin = CQ.Ext.extend(CQ.form.rte.
 });
 
 //register plugin
-CQ.form.rte.plugins.PluginRegistry.register("blockquote", AEM.Toolbox.Widgets.rte.plugins.RTEBlockquotePlugin);
+CUI.rte.plugins.PluginRegistry.register("blockquote", AEM.Toolbox.Widgets.rte.plugins.RTEBlockquotePlugin);

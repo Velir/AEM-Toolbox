@@ -1,5 +1,11 @@
 //create widget namespace
-CQ.Ext.ns('AEM.Toolbox.Widgets.rte.commands');
+// CQ.Ext.ns('AEM.Toolbox.Widgets.rte.commands');
+
+var AEM = AEM || {};
+AEM.Toolbox = AEM.Toolbox || {};
+AEM.Toolbox.Widgets = {};
+AEM.Toolbox.Widgets.rte = {};
+AEM.Toolbox.Widgets.rte.commands = {};
 
 AEM.Toolbox.Widgets.rte.commands.RTEBlockquoteCommand = CQ.Ext.extend(CQ.form.rte.commands.Command, {
 	//Class to apply to inner paragraph
@@ -213,4 +219,4 @@ AEM.Toolbox.Widgets.rte.commands.RTEBlockquoteCommand = CQ.Ext.extend(CQ.form.rt
 });
 
 // register command
-CQ.form.rte.commands.CommandRegistry.register("rteblockquotecommand", AEM.Toolbox.Widgets.rte.commands.RTEBlockquoteCommand);
+CUI.rte.commands.CommandRegistry.register("rteblockquotecommand", AEM.Toolbox.Widgets.rte.commands.RTEBlockquoteCommand);
