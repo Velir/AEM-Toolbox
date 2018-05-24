@@ -50,6 +50,15 @@
 			<artifactId>cq-wcm-foundation</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>com.adobe.granite</groupId>
+			<artifactId>com.adobe.granite.ui.commons</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.adobe.granite</groupId>
+			<artifactId>com.adobe.granite.i18n</artifactId>
+		</dependency>
+
 		<!-- Adobe -->
 		<!-- Sling -->
 		<dependency>

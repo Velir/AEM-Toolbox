@@ -77,6 +77,7 @@
 		<aem.application.port>4502</aem.application.port>
 		<aem.admin.username>admin</aem.admin.username>
 		<aem.admin.password>admin</aem.admin.password>
+		<component.plugin.version>4.0.0</component.plugin.version>
 	</properties>
 
 	<dependencyManagement>
@@ -124,6 +125,19 @@
 				<scope>provided</scope>
 			</dependency>
 
+			<dependency>
+				<groupId>com.adobe.granite</groupId>
+				<artifactId>com.adobe.granite.ui.commons</artifactId>
+				<version>5.5.154-CQ600-B0004</version>
+				<scope>provided</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>com.adobe.granite</groupId>
+				<artifactId>com.adobe.granite.i18n</artifactId>
+				<version>5.5.12</version>
+				<scope>provided</scope>
+			</dependency>
 			<!-- Adobe -->
 			<!-- Sling -->
 			<dependency>
@@ -215,6 +229,7 @@
 				<version>1.0.2</version>
 				<scope>test</scope>
 			</dependency>
+
 		</dependencies>
 	</dependencyManagement>
 

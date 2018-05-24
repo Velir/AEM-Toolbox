@@ -1,0 +1,116 @@
+/* youtubesearch.form.styl */
+
+.coral-Form--vertical .coral-Form-field.coral-Youtubesearch{
+	display: block;
+	width: 100%;
+}
+
+/* youtubesearch.styl */
+
+.coral-Youtubesearch {
+	position: relative;
+	display: inline-block;
+	vertical-align: top;
+	width: 12.5rem;
+}
+
+.coral-Youtubesearch > .coral-InputGroup {
+	width: 100%;
+}
+
+.coral-Youtubesearch > .coral-TagList {
+	margin-top: .4375rem;
+}
+
+.coral-Youtubesearch-picker-backdrop {
+	z-index: 1441;
+}
+
+.coral-Youtubesearch-picker {
+	width: 60%;
+	height: 60%;
+	z-index: 1442;
+}
+
+.coral-Youtubesearch-picker .coral-Modal-header {
+	height: 3.3125rem;
+}
+
+.coral-Youtubesearch-picker .coral-Modal-header .coral-Button {
+	float: left;
+	margin: .4375rem;
+}
+
+.coral-Youtubesearch-picker .coral-Modal-header .coral-Button--primary {
+	float: right;
+}
+
+.coral-Youtubesearch-picker .coral-Modal-title {
+	margin: 0 4.375rem;
+	text-align: center;
+	line-height: 3.3125rem;
+}
+
+.coral-Youtubesearch-picker .coral-Modal-body {
+	width: 100%;
+	padding: 0;
+	position: absolute;
+	top: 3.3125rem;
+	bottom: 0;
+}
+
+.coral-Youtubesearch-picker .coral-TabPanel {
+	height: 100%;
+	margin: 0;
+}
+
+.coral-Youtubesearch-picker .coral-TabPanel-navigation > .coral-TabPanel-tab {
+	min-width: 1.125rem;
+}
+
+.coral-Youtubesearch-picker .coral-TabPanel-content {
+	height: 100%;
+	padding: 0;
+	border-width: 0 0 0 .0625rem;
+	border-radius: 0;
+}
+
+.coral-Youtubesearch-picker .coral-TabPanel-pane {
+	height: 100%;
+}
+
+.coral-Youtubesearch-pickerBar {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	position: relative;
+	border-bottom: solid .0625rem #d1d1d1;
+}
+
+.coral-Youtubesearch-pickerBar .coral-Crumbs {
+	margin-left: .9375rem;
+}
+
+.coral-Youtubesearch-pickerPanel {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
+.yt-video-title {
+	font-size: 1.25em;
+	font-weight: bold;
+	padding-bottom: 15px;
+}
+
+.yt-video-summary {
+	padding: 25px;
+}
+
+.yt-video-image {
+	margin-top: 30px;
+	margin-bottom: 10px;
+	margin-left: 10px;
+}
