@@ -10,11 +10,12 @@
 				return true;
 			}
 
-			var isValidId = (val.length === 11);
+			var isValidId = (val.length === 11 || val.length === 0);
 
 			if(!isValidId){
 				return 'Can not recognize video from youtube URL. Please copy/paste a full URL from a Youtube video page, or copy the ID directly.';
 			}else {
+				//reset the input value to be the extracted video id
 				$el.value = val;
 			}
 		}

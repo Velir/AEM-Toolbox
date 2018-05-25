@@ -105,7 +105,6 @@ window.VelirTouchUI = window.VelirTouchUI || {};
 				this.typeTimeout = null;
 			}.bind(this));
 
-			this.$element.on("keydown", "input", this._keyPressed.bind(this));
 			this.$element.on("keyup", "input", this._keyUp.bind(this));
 
 		},
@@ -184,18 +183,6 @@ window.VelirTouchUI = window.VelirTouchUI || {};
 			var key = event.keyCode;
 			if (key === 8) {
 				this.triggeredBackspace = false; // Release the key event
-			}
-		},
-
-		/** @ignore */
-		_keyPressed: function(event) {
-			var key = event.keyCode;
-			if (!this.dropdownList.get('visible')) {
-				//if (!this.dropdownList.isVisible()) {
-				if (key === 40) {
-					this._inputChanged(); // Show box now!
-					event.preventDefault();
-				}
 			}
 		},
 
