@@ -1,0 +1,4 @@
+#base=js/
+
+youtubesearch/ytsearchvalidator.js
+Validators.js

@@ -94,15 +94,15 @@ public class VelirYoutubeSearchModel {
 		inputAttrs.add("name", getConfig().get("name", String.class));
 		inputAttrs.add("is", "coral-textfield");
 
+		String validation = StringUtils.join(getConfig().get("validation", new String[0]), " ");
+		inputAttrs.add("data-foundation-validation", validation);
+		inputAttrs.add("data-validation", validation); // Compatibility
+
 		inputAttrs.add("value", vm.get("value", String.class));
 
 		if (getConfig().get("required", false)) {
 			inputAttrs.add("aria-required", true);
 		}
-
-		String validation = StringUtils.join(getConfig().get("validation", new String[0]), " ");
-		inputAttrs.add("data-foundation-validation", validation);
-		inputAttrs.add("data-validation", validation); // Compatibility
 
 		return inputAttrs.build();
 	}

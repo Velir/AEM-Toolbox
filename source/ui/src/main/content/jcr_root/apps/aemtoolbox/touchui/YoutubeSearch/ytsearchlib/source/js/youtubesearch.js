@@ -86,9 +86,6 @@ window.VelirTouchUI = window.VelirTouchUI || {};
 
 			// Listen to events
 			this.$element.on("input", "." + CLASS_INPUT, function() {
-				if (this.options.disabled) {
-					return;
-				}
 				if (this.typeTimeout) {
 					clearTimeout(this.typeTimeout);
 				}
@@ -102,9 +99,6 @@ window.VelirTouchUI = window.VelirTouchUI || {};
 			}
 
 			this.$element.on("blur", "." + CLASS_INPUT, function() {
-				if (this.options.disabled) {
-					return;
-				}
 				if (this.typeTimeout) {
 					clearTimeout(this.typeTimeout);
 				}
