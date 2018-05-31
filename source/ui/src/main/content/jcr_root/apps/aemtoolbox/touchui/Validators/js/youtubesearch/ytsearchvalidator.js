@@ -24,7 +24,6 @@
     ns.utils = {
 		getYoutubeVideoId: function($el){
 			var val = $el.value;
-			//TODO Allow 'www.youtube.com/watch?v=n1dKVVosqJk' structure
 			var youRegEx = /(http|https):\/\/(?:youtu\.be\/|(?:[a-z]{2,3}\.)?youtube\.com\/watch(?:\?|#\!)v=)([\w-]{11}).*/;
 
 			if(youRegEx.test(val)) {
@@ -33,6 +32,7 @@
 			}
 			return val;
 		}
+
     }
 
 })(window.VelirValidators = window.VelirValidators || {}, jQuery, Granite);

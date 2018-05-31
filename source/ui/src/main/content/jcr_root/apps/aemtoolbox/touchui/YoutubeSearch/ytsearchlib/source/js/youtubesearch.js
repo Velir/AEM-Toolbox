@@ -84,14 +84,6 @@ window.VelirTouchUI = window.VelirTouchUI || {};
 			this.$element.on('change:value', this._handleValueChange.bind(this));
 			this.$element.on('change:disabled', this._update.bind(this));
 
-			// Listen to events
-			this.$element.on("input", "." + CLASS_INPUT, function() {
-				if (this.typeTimeout) {
-					clearTimeout(this.typeTimeout);
-				}
-				this.typeTimeout = setTimeout(this._inputChanged.bind(this), this.options.delay);
-			}.bind(this));
-
 			if (this.pickerEnabled) {
 				this.$button.on("click", this._clickedPickerButton.bind(this));
 				this.$picker.on("beforehide", this._beforeHidePicker.bind(this));
@@ -452,8 +444,8 @@ window.VelirTouchUI = window.VelirTouchUI || {};
 		_getSelectedVideo: function(event) {
 			var selection = event.detail.selection;
 
-			if (selection) {
-				this._selection = selection.firstElementChild.$.find("img").data("videoId");
+			if (selection && $(selection).length > 0) {
+				this._selection = $(selection)[0].$.find("img").data("videoId");
 			}
 
 		},

@@ -63,10 +63,9 @@ public class VelirYoutubeSearchModel {
 		AttrBuilder attrs = tag.getAttrs();
 		cmp.populateCommonAttrs(attrs);
 
-		String youtubeUserID = cfg.get("youtubeUserID", String.class);
-		String apiKey = cfg.get("apiKey", String.class);
-		String playlistID = cfg.get("playlistID", String.class);
-
+		String youtubeUserID = getYoutubeUserID();
+		String apiKey = getAPIKey();
+		String playlistID = getPlaylistID();
 		attrs.addClass("coral-YoutubeSearch");
 		attrs.add("data-init", "youtubesearch");
 		attrs.add("data-picker-title", i18n.getVar(cfg.get("pickerTitle", String.class)));
@@ -83,16 +82,30 @@ public class VelirYoutubeSearchModel {
 		return attrs.build();
 	}
 
+	public String getYoutubeUserID() {
+		return getConfig().get("youtubeUserID", String.class);
+	}
+
+	public String getAPIKey() {
+		return getConfig().get("apiKey", String.class);
+	}
+
+	public String getPlaylistID() {
+		return getConfig().get("playlistID", String.class);
+	}
+
 	private String buildInputAttrs() {
 
 		ValueMap vm = (ValueMap) request.getAttribute(Field.class.getName());
 
+		Boolean isRequired = getConfig().get("isRequired", Boolean.class);
 		AttrBuilder inputAttrs = new AttrBuilder(request, getXssAPI());
 		inputAttrs.addClass("coral-InputGroup-input");
 		inputAttrs.addClass("js-coral-youtubesearch-input");
 		inputAttrs.add("type", "text");
 		inputAttrs.add("name", getConfig().get("name", String.class));
 		inputAttrs.add("is", "coral-textfield");
+		inputAttrs.add("aria-required", isRequired != null? isRequired:Boolean.FALSE);
 
 		String validation = StringUtils.join(getConfig().get("validation", new String[0]), " ");
 		inputAttrs.add("data-foundation-validation", validation);
