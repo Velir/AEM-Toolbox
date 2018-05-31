@@ -26,10 +26,11 @@
 		</dependency>
 
 		<dependency>
-			<groupId>com.day.cq</groupId>
-			<artifactId>cq-commons</artifactId>
+			<groupId>com.adobe.aem</groupId>
+			<artifactId>uber-jar</artifactId>
+			<classifier>apis</classifier>
 		</dependency>
-
+		
 		<dependency>
 			<groupId>com.day.cq.dam</groupId>
 			<artifactId>cq-dam-api</artifactId>
@@ -148,7 +149,6 @@
 						</Export-Package>
 						<Import-Package>*</Import-Package>
 						<Embed-Dependency>*;scope=compile</Embed-Dependency>
-						<Service-Component>OSGI-INF/serviceComponents.xml</Service-Component>
 						<Sling-Test-Regexp>.*Test</Sling-Test-Regexp>
 					</instructions>
 				</configuration>

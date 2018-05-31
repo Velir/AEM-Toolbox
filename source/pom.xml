@@ -70,7 +70,7 @@
 	</modules>
 
 	<properties>
-		<project.build.jdk>1.6</project.build.jdk>
+		<project.build.jdk>1.8</project.build.jdk>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<root.dir>${basedir}</root.dir>
 		<aem.application.server>localhost</aem.application.server>
@@ -91,9 +91,10 @@
 			</dependency>
 
 			<dependency>
-				<groupId>com.day.cq</groupId>
-				<artifactId>cq-commons</artifactId>
-				<version>5.6.4</version>
+				<groupId>com.adobe.aem</groupId>
+				<artifactId>uber-jar</artifactId>
+				<version>6.2.0-SP1</version>
+				<classifier>apis</classifier>
 				<scope>provided</scope>
 			</dependency>
 
@@ -250,7 +251,7 @@
 				<plugin>
 					<groupId>org.apache.felix</groupId>
 					<artifactId>maven-bundle-plugin</artifactId>
-					<version>1.4.3</version>
+					<version>3.3.0</version>
 				</plugin>
 
 				<plugin>
@@ -269,10 +270,7 @@
 				<plugin>
 					<groupId>org.apache.felix</groupId>
 					<artifactId>maven-scr-plugin</artifactId>
-					<version>1.11.0</version>
-					<configuration>
-						<generateSeparateDescriptors>false</generateSeparateDescriptors>
-					</configuration>
+					<version>1.26.0</version>
 					<executions>
 						<execution>
 							<id>generate-scr-scrdescriptor</id>
@@ -286,6 +284,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-release-plugin</artifactId>
+					<version>1.0.0</version>
 					<configuration>
 						<localCheckout>true</localCheckout>
 						<autoVersionSubmodules>true</autoVersionSubmodules>
