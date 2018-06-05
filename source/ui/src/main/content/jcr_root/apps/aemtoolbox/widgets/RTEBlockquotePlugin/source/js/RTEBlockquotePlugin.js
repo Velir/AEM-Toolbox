@@ -6,7 +6,10 @@ AEM.Toolbox.Widgets = {};
 AEM.Toolbox.Widgets.rte = {};
 AEM.Toolbox.Widgets.rte.plugins = {};
 
-AEM.Toolbox.Widgets.rte.plugins.RTEBlockquotePlugin = CQ.Ext.extend(CQ.form.rte.plugins.Plugin, {
+AEM.Toolbox.Widgets.rte.plugins.RTEBlockquotePlugin = new Class({
+
+    extend: CUI.rte.plugins.Plugin,
+
 	/**
 	 * @private
 	 */
@@ -33,20 +36,20 @@ AEM.Toolbox.Widgets.rte.plugins.RTEBlockquotePlugin = CQ.Ext.extend(CQ.form.rte.
 
 	//called by rte kernel when rte is first generated.
 	initializeUI:function (tbGenerator) {
-		var ui = CQ.form.rte.ui;
+		var ui = CUI.rte.ui;
 		if (this.isFeatureEnabled("blockquote")) {
-			this.blockquoteUI = new ui.TbElement("blockquote", this, true, this.getTooltip("blockquote"));
+			this.blockquoteUI = tbGenerator.createElement("blockquote", this, true, this.getTooltip("blockquote"));
 			//toolbar builder addElement method takes (groupId, groupSort, uiElement, uiElementSort)
 			tbGenerator.addElement("blockquote", 1100, this.blockquoteUI, 110);
 		}
 		if (this.isFeatureEnabled("linedblockquote")) {
-			this.linedBlockquoteUI = new ui.TbElement("linedblockquote", this, true, this.getTooltip("linedblockquote"));
+			this.linedBlockquoteUI = tbGenerator.createElement("linedblockquote", this, true, this.getTooltip("linedblockquote"));
 			//toolbar builder addElement method takes (groupId, groupSort, uiElement, uiElementSort)
 			tbGenerator.addElement("blockquote", 1200, this.linedBlockquoteUI, 110);
 		}
 
 		if (this.isFeatureEnabled("ulinedblockquote")) {
-			this.unlinedBlockquoteUI = new ui.TbElement("ulinedblockquote", this, true, this.getTooltip("ulinedblockquote"));
+			this.unlinedBlockquoteUI = tbGenerator.createElement("ulinedblockquote", this, true, this.getTooltip("ulinedblockquote"));
 			//toolbar builder addElement method takes (groupId, groupSort, uiElement, uiElementSort)
 			tbGenerator.addElement("blockquote", 1200, this.unlinedBlockquoteUI, 110);
 		}
@@ -72,7 +75,7 @@ AEM.Toolbox.Widgets.rte.plugins.RTEBlockquotePlugin = CQ.Ext.extend(CQ.form.rte.
 				}
 			}
 		};
-		CQ.Util.applyDefaults(pluginConfig, defaults);
+        CUI.rte.Utils.applyDefaults(pluginConfig, defaults);
 		this.config = pluginConfig;
 	},
 

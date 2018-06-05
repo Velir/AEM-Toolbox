@@ -7,7 +7,9 @@ AEM.Toolbox.Widgets = {};
 AEM.Toolbox.Widgets.rte = {};
 AEM.Toolbox.Widgets.rte.commands = {};
 
-AEM.Toolbox.Widgets.rte.commands.RTEUnlinedBlockquoteCommand = CQ.Ext.extend(AEM.Toolbox.Widgets.rte.commands.RTELinedBlockquoteCommand , {
+AEM.Toolbox.Widgets.rte.commands.RTEUnlinedBlockquoteCommand = new Class({
+
+    extend: AEM.Toolbox.Widgets.rte.commands.RTELinedBlockquoteCommand,
 
 	//determines if the command provided is a match for this command object.
 	isCommand:function (cmdStr) {

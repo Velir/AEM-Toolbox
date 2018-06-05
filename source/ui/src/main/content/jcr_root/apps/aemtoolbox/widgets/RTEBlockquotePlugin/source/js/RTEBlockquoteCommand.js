@@ -7,7 +7,10 @@ AEM.Toolbox.Widgets = {};
 AEM.Toolbox.Widgets.rte = {};
 AEM.Toolbox.Widgets.rte.commands = {};
 
-AEM.Toolbox.Widgets.rte.commands.RTEBlockquoteCommand = CQ.Ext.extend(CQ.form.rte.commands.Command, {
+AEM.Toolbox.Widgets.rte.commands.RTEBlockquoteCommand = new Class({
+
+    extend: CUI.rte.commands.Command,
+
 	//Class to apply to inner paragraph
 	paragraphClassStyle:function(){
 		return "";
