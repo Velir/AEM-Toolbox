@@ -1,7 +1,15 @@
 //create widget namespace
-CQ.Ext.ns('AEM.Toolbox.Widgets.rte.commands');
+// CQ.Ext.ns('AEM.Toolbox.Widgets.rte.commands');
 
-AEM.Toolbox.Widgets.rte.commands.RTELinedBlockquoteCommand = CQ.Ext.extend(AEM.Toolbox.Widgets.rte.commands.RTEBlockquoteCommand, {
+var AEM = AEM || {};
+AEM.Toolbox = AEM.Toolbox || {};
+AEM.Toolbox.Widgets = {};
+AEM.Toolbox.Widgets.rte = {};
+AEM.Toolbox.Widgets.rte.commands = {};
+
+AEM.Toolbox.Widgets.rte.commands.RTELinedBlockquoteCommand = new Class({
+
+    extend: AEM.Toolbox.Widgets.rte.commands.RTEBlockquoteCommand,
 
 	paragraphClassStyle:function(){
 		return "lined"
@@ -32,4 +40,4 @@ AEM.Toolbox.Widgets.rte.commands.RTELinedBlockquoteCommand = CQ.Ext.extend(AEM.T
 });
 
 // register command
-CQ.form.rte.commands.CommandRegistry.register("rtelinedblockquotecommand", AEM.Toolbox.Widgets.rte.commands.RTELinedBlockquoteCommand);
+CUI.rte.commands.CommandRegistry.register("rtelinedblockquotecommand", AEM.Toolbox.Widgets.rte.commands.RTELinedBlockquoteCommand);
