@@ -1,11 +1,9 @@
 //create widget namespace
-// CQ.Ext.ns('AEM.Toolbox.Widgets.rte.commands');
-
 var AEM = AEM || {};
 AEM.Toolbox = AEM.Toolbox || {};
-AEM.Toolbox.Widgets = {};
-AEM.Toolbox.Widgets.rte = {};
-AEM.Toolbox.Widgets.rte.commands = {};
+AEM.Toolbox.Widgets = AEM.Toolbox.Widgets || {};
+AEM.Toolbox.Widgets.rte = AEM.Toolbox.Widgets.rte || {};
+AEM.Toolbox.Widgets.rte.commands = AEM.Toolbox.Widgets.rte.commands || {};
 
 AEM.Toolbox.Widgets.rte.commands.RTEBlockquoteCommand = new Class({
 
@@ -22,14 +20,14 @@ AEM.Toolbox.Widgets.rte.commands.RTEBlockquoteCommand = new Class({
 	},
 
 	getProcessingOptions:function () {
-		var cmd = CQ.form.rte.commands.Command;
+		var cmd = CUI.rte.commands.Command;
 		return cmd.PO_BOOKMARK | cmd.PO_SELECTION;
 	},
 
 	//called by plugin to execute this command.
 	execute:function (execDef) {
 		//get our dom processor.
-		var dpr = CQ.form.rte.DomProcessor;
+		var dpr = CUI.rte.DomProcessor;
 
 		//get objects necessary for determining if we should add or remove blockquote tags.
 		var selection = execDef.selection;
@@ -54,7 +52,7 @@ AEM.Toolbox.Widgets.rte.commands.RTEBlockquoteCommand = new Class({
 
 	removeBlockquote:function (nodeList) {
 		//get our dom processor.
-		var dpr = CQ.form.rte.DomProcessor;
+		var dpr = CUI.rte.DomProcessor;
 
 		//get our blockquote
 		var blockquote = this.getClosestBlockquote(nodeList);
@@ -84,8 +82,8 @@ AEM.Toolbox.Widgets.rte.commands.RTEBlockquoteCommand = new Class({
 		}
 
 		//get our common library and dom processor.
-		var com = CQ.form.rte.Common;
-		var dpr = CQ.form.rte.DomProcessor;
+		var com = CUI.rte.Common;
+		var dpr = CUI.rte.DomProcessor;
 
 		//get our container list.  this is what we want to wrap.
 		var containerList = dpr.createContainerList(context, selection);

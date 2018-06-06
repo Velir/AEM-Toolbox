@@ -1,11 +1,9 @@
 //create widget namespace
-// CQ.Ext.ns('AEM.Toolbox.Widgets.rte.commands');
-
 var AEM = AEM || {};
 AEM.Toolbox = AEM.Toolbox || {};
-AEM.Toolbox.Widgets = {};
-AEM.Toolbox.Widgets.rte = {};
-AEM.Toolbox.Widgets.rte.commands = {};
+AEM.Toolbox.Widgets = AEM.Toolbox.Widgets || {};
+AEM.Toolbox.Widgets.rte = AEM.Toolbox.Widgets.rte || {};
+AEM.Toolbox.Widgets.rte.commands = AEM.Toolbox.Widgets.rte.commands || {};
 
 AEM.Toolbox.Widgets.rte.commands.RTELinedBlockquoteCommand = new Class({
 

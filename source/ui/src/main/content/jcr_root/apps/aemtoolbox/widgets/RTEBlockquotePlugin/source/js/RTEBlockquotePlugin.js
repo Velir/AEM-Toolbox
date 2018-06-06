@@ -1,10 +1,9 @@
 //create widget namespace
-// CQ.Ext.ns('AEM.Toolbox.Widgets.rte.plugins');
 var AEM = AEM || {};
 AEM.Toolbox = AEM.Toolbox || {};
-AEM.Toolbox.Widgets = {};
-AEM.Toolbox.Widgets.rte = {};
-AEM.Toolbox.Widgets.rte.plugins = {};
+AEM.Toolbox.Widgets = AEM.Toolbox.Widgets || {};
+AEM.Toolbox.Widgets.rte = AEM.Toolbox.Widgets.rte || {};
+AEM.Toolbox.Widgets.rte.plugins = AEM.Toolbox.Widgets.rte.plugins || {};
 
 AEM.Toolbox.Widgets.rte.plugins.RTEBlockquotePlugin = new Class({
 
@@ -62,16 +61,16 @@ AEM.Toolbox.Widgets.rte.plugins.RTEBlockquotePlugin = new Class({
 		var defaults = {
 			"tooltips":{
 				"blockquote":{
-					"title":CQ.I18n.getMessage("Blockquote"),
-					"text":CQ.I18n.getMessage("Wrap selection as a blockquote.")
+					"title":CUI.rte.Utils.i18n("Blockquote"),
+					"text":CUI.rte.Utils.i18n("Wrap selection as a blockquote.")
 				},
 				"linedblockquote":{
-					"title":CQ.I18n.getMessage("Pull Quote"),
-					"text":CQ.I18n.getMessage("Wrap selection as a pull quote.")
+					"title":CUI.rte.Utils.i18n("Pull Quote"),
+					"text":CUI.rte.Utils.i18n("Wrap selection as a pull quote.")
 				},
 				"ulinedblockquote":{
-					"title":CQ.I18n.getMessage("Introduction"),
-					"text":CQ.I18n.getMessage("Wrap selection as an introduction quote.")
+					"title":CUI.rte.Utils.i18n("Introduction"),
+					"text":CUI.rte.Utils.i18n("Wrap selection as an introduction quote.")
 				}
 			}
 		};
@@ -82,29 +81,29 @@ AEM.Toolbox.Widgets.rte.plugins.RTEBlockquotePlugin = new Class({
 	//called when a command is pressed for this plugin.
 	execute:function (cmd, value, options) {
 		if (cmd == "blockquote" && this.blockquoteUI) {
-			this.editorKernel.relayCmd("rteblockquotecommand", this.blockquoteUI.getExtUI().pressed);
+            this.editorKernel.relayCmd("rteblockquotecommand", this.blockquoteUI.isSelected());
 		}
 		if (cmd == "linedblockquote" && this.linedBlockquoteUI) {
-			this.editorKernel.relayCmd("rtelinedblockquotecommand", this.linedBlockquoteUI.getExtUI().pressed);
+            this.editorKernel.relayCmd("rtelinedblockquotecommand", this.linedBlockquoteUI.isSelected());
 		}
 		if (cmd == "ulinedblockquote" && this.unlinedBlockquoteUI) {
-			this.editorKernel.relayCmd("rteunlinedblockquotecommand", this.unlinedBlockquoteUI.getExtUI().pressed);
+            this.editorKernel.relayCmd("rteunlinedblockquotecommand", this.unlinedBlockquoteUI.isSelected());
 		}
 	},
 
 	//called when some action is performed in the rte.
 	updateState:function (selDef) {
-		if (this.blockquoteUI && this.blockquoteUI.getExtUI()) {
+		if (this.blockquoteUI != null) {
 			//set button state.
-			this.blockquoteUI.getExtUI().toggle(this.editorKernel.queryState("rteblockquotecommand", selDef));
+            this.blockquoteUI.toggle = this.editorKernel.queryState("rteblockquotecommand", selDef);
 		}
-		if (this.linedBlockquoteUI && this.linedBlockquoteUI.getExtUI()) {
+		if (this.linedBlockquoteUI != null) {
 			//set button state.
-			this.linedBlockquoteUI.getExtUI().toggle(this.editorKernel.queryState("rtelinedblockquotecommand", selDef));
+            this.linedBlockquoteUI.toggle = this.editorKernel.queryState("rtelinedblockquotecommand", selDef);
 		}
-		if (this.unlinedBlockquoteUI && this.unlinedBlockquoteUI.getExtUI()) {
+		if (this.unlinedBlockquoteUI != null) {
 			//set button state.
-			this.unlinedBlockquoteUI.getExtUI().toggle(this.editorKernel.queryState("rteunlinedblockquotecommand", selDef));
+            this.unlinedBlockquoteUI.toggle = this.editorKernel.queryState("rteunlinedblockquotecommand", selDef);
 		}
 	}
 });
