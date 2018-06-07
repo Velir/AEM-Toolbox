@@ -1,0 +1,18 @@
+button.coral-RichText-toolbar-item.coral-Icon.x-html-editor-tb.x-edit-touchblockquote{
+    background-image:url(/etc/designs/aemtoolbox/images/icons/blockquote.png);
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+button.coral-RichText-toolbar-item.coral-Icon.x-html-editor-tb.x-edit-touchulinedblockquote{
+    background-image:url(/etc/designs/aemtoolbox/images/icons/lined-blockquote.png);
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+button.coral-RichText-toolbar-item.coral-Icon.x-html-editor-tb.x-edit-touchlinedblockquote{
+    background-image:url(/etc/designs/aemtoolbox/images/icons/introduction.png);
+    background-position: center;
+    background-repeat: no-repeat;
+
+}
