@@ -5,14 +5,34 @@ button.coral-RichText-toolbar-item.coral-Icon.x-html-editor-tb.x-edit-touchblock
 }
 
 button.coral-RichText-toolbar-item.coral-Icon.x-html-editor-tb.x-edit-touchulinedblockquote{
-    background-image:url(/etc/designs/aemtoolbox/images/icons/lined-blockquote.png);
+    background-image:url(/etc/designs/aemtoolbox/images/icons/introduction.png);
     background-position: center;
     background-repeat: no-repeat;
 }
 
 button.coral-RichText-toolbar-item.coral-Icon.x-html-editor-tb.x-edit-touchlinedblockquote{
-    background-image:url(/etc/designs/aemtoolbox/images/icons/introduction.png);
+    background-image:url(/etc/designs/aemtoolbox/images/icons/lined-blockquote.png);
     background-position: center;
     background-repeat: no-repeat;
+}
 
+blockquote p {
+    background: transparent url('/images/icons/quotes.png') no-repeat 0 2px;
+    min-height:30px;
+    padding-left:34px;
+}
+
+blockquote p.lined,
+blockquote p.unlined {
+    background: none;
+    color: #8f8982;
+    font-size: 24px;
+    font-family: "museo-sans-n1","museo-sans", 'Helvetica Neue', 'Neue Helvetica', 'Helvetica', sans-serif;
+    font-weight: 100;
+    line-height: 1.45;
+    padding: 0;
+}
+blockquote p.lined {
+    border-left: solid 6px #2a92ce;
+    padding-left: 25px;
 }
