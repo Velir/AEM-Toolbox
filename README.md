@@ -177,7 +177,7 @@ Allows content authors to search a YouTube channel for embedding videos into a c
 
 ## RTE Blockquote Plugin
 
-Provides additional buttons in the RTE for wrapping content in a <blockquote/> tag.  This plugin contains two features 'blockquote' and 'linedblockquote'.
+Provides additional buttons in the RTE for wrapping content in a &lt;blockquote/&gt; tag.  This plugin contains two features 'blockquote' and 'linedblockquote'.
 
 * Configure your RTE with the blockquote plugin and configure any features you want enabled.
 * Add blockquote and linedblockquote css styles to the RTE and website pages.
