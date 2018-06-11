@@ -199,6 +199,38 @@ Provides additional buttons in the RTE for wrapping content in a <blockquote/> t
 </content>
 ```
 
+Touch UI version of Blockquote Plugin:
+```
+<content
+	jcr:primaryType="nt:unstructured"
+		name="./richText"
+		fieldLabel="Rich Text"
+		useFixedInlineToolbar="true"
+		externalStyleSheets="[/etc/designs/clientlibs/wysiwyg.css]"
+		sling:resourceType="cq/gui/components/authoring/dialog/richtext">
+	<rtePlugins
+		jcr:primaryType="nt:unstructured">
+			<blockquote 
+				jcr:primaryType="nt:unstructured" 
+				features="[blockquote,linedblockquote]"/>
+	</rtePlugins>
+	<uiSettings 
+		jcr:primaryType="nt:unstructured"/>
+		<cui jcr:primaryType="nt:unstructured">
+			<inline jcr:primaryType="nt:unstructured" toolbar="[blockquote#blockquote,blockquote#linedblockquote]"/>
+			<icons jcr:primaryType="nt:unstructured">
+				<blockquote jcr:primaryType="nt:unstructured"
+					command="blockquote#blockquote"
+					icon="coral-Icon x-html-editor-tb x-edit-touchblockquote"/>
+				<linedblockquote jcr:primaryType="nt:unstructured"
+					command="blockquote#linedblockquote"
+					icon="coral-Icon x-html-editor-tb x-edit-touchlinedblockquote"/>
+			</icons>
+		</cui>
+	</uiSettings>
+</content>
+```
+
 Blockquote HTML Structure:
 ```
 <blockquote>
