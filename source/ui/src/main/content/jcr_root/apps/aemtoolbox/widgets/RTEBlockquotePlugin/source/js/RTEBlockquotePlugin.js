@@ -93,17 +93,17 @@ AEM.Toolbox.Widgets.rte.plugins.RTEBlockquotePlugin = new Class({
 
 	//called when some action is performed in the rte.
 	updateState:function (selDef) {
-		if (this.blockquoteUI != null) {
+		if (this.blockquoteUI !== null) {
 			//set button state.
-            this.blockquoteUI.toggle = this.editorKernel.queryState("rteblockquotecommand", selDef);
+            this.blockquoteUI.setSelected(this.editorKernel.queryState("rteblockquotecommand", selDef));
 		}
-		if (this.linedBlockquoteUI != null) {
+		if (this.linedBlockquoteUI !== null) {
 			//set button state.
-            this.linedBlockquoteUI.toggle = this.editorKernel.queryState("rtelinedblockquotecommand", selDef);
+            this.linedBlockquoteUI.setSelected(this.editorKernel.queryState("rtelinedblockquotecommand", selDef));
 		}
-		if (this.unlinedBlockquoteUI != null) {
+		if (this.unlinedBlockquoteUI !== null) {
 			//set button state.
-            this.unlinedBlockquoteUI.toggle = this.editorKernel.queryState("rteunlinedblockquotecommand", selDef);
+            this.unlinedBlockquoteUI.setSelected(this.editorKernel.queryState("rteunlinedblockquotecommand", selDef));
 		}
 	}
 });
