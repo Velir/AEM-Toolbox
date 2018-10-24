@@ -17,18 +17,24 @@ window.VelirTouchUI = window.VelirTouchUI || {};
 			'</div>'
 		].join(''),
 		HTML_PICKER = [
-			'<div class="coral-Youtubesearch-picker coral-Modal" id="%ID%">',
-			'<div class="coral-Modal-header">',
-			'<h2 class="coral-Modal-title coral-Heading coral-Heading--2"></h2>',
-			'<button type="button" class="js-coral-youtubesearch-confirm coral-Button coral-Button--square coral-Button--primary" title="Confirm">',
-			'<i class="coral-Icon coral-Icon-sizeXS coral-Icon--check"></i>',
-			'</button>',
-			'<button type="button" class="js-coral-youtubesearch-cancel coral-Button coral-Button--square coral-Button" title="Cancel">',
-			'<i class="coral-Icon coral-Icon-sizeXS coral-Icon--close"></i>',
-			'</button>',
-			'</div>',
-			'<div class="coral-Modal-body"></div>',
-			'</div>'
+            '<coral-Dialog class="coral-Youtubesearch-picker" id="%ID%" movable>',
+           //'<div class="coral-Youtubesearch-picker coral-Modal" id="%ID%">',
+            		//'<div class="coral-Modal-header">',
+						'<coral-dialog-header>',
+							'<h2 class="coral-Heading coral-Heading--2"></h2>',
+							'<button type="button" class="js-coral-youtubesearch-confirm coral3-Button coral3-Button--primary" title="Confirm" is="coral-button" icon="check" iconsize="S" size="M" variant="primary" >',
+							'<coral-icon class="coral3-Icon coral3-Icon--sizeS coral3-Icon--check" icon="check" size="S" role="img" aria-label="check"></coral-icon>',
+							'</button>',
+							'<button type="button" class="js-coral-youtubesearch-cancel coral3-Button  coral3-Button--secondary" title="Cancel" is="coral-button" icon="close" iconsize="S" size="M" variant="secondary">',
+							'<coral-icon class="coral3-Icon coral3-Icon--sizeS coral3-Icon--close" icon="close" size="S" role="img" aria-label="close"></coral-icon>',
+							'</button>',
+						'</coral-dialog-header>',
+					//'</div>',
+			//<div class="coral-Modal-body"></div>',
+			//'<coral-dialog-content class="coral-Modal-body"></coral-dialog-content>',
+            '<coral-dialog-content><div class="coral-Modal-body"></div></coral-dialog-content>',
+            '</coral-Dialog>',
+            //'</div>'
 		].join(''),
 		HTML_WAIT = '<div class="coral-Wait coral-Wait--large coral-Wait--center"></div>';
 
@@ -183,14 +189,14 @@ window.VelirTouchUI = window.VelirTouchUI || {};
 		_constructPicker: function() {
 			// Create the Picker .coral-Modal, if not already existing in markup
 			var id = "yt-mod-guid-" + this.guid,
-					idSel = "#" + id + ".coral-Modal",
+					idSel = "#" + id + ".coral3-Dialog",
 					pickerOptions;
 
-			this.$picker = $('body').find(idSel);
+			this.$picker = $('coral3-Dialog-content').find(idSel);
 
 			if (this.$picker.length === 0) {
-				$('body').append(HTML_PICKER.replace("%ID%", id));
-				this.$picker = $('body').find(idSel);
+                $('coral3-Dialog-content').append(HTML_PICKER.replace("%ID%", id));
+				this.$picker = $('coral3-Dialog-content').find(idSel);
 			}
 
 			pickerOptions = $.extend({}, this.options, {
@@ -241,9 +247,10 @@ window.VelirTouchUI = window.VelirTouchUI || {};
 
 	var PICKER_CLASS_CONFIRM = 'js-coral-youtubesearch-confirm',
 		PICKER_CLASS_CANCEL = 'js-coral-youtubesearch-cancel',
-		PICKER_CLASS_MODAL_BACKDROP = 'coral-youtubesearch-picker-backdrop',
-		PICKER_CLASS_MODAL_TITLE = 'coral-Modal-title',
-		PICKER_CLASS_MODAL_BODY = 'coral-Modal-body',
+		//PICKER_CLASS_MODAL_BACKDROP = 'coral-youtubesearch-picker-backdrop',
+        PICKER_CLASS_MODAL_BACKDROP = 'coral-Youtubesearch-picker-coral-backdrop',
+		PICKER_CLASS_MODAL_TITLE = 'coral-heading',
+		PICKER_CLASS_MODAL_BODY = 'coral3-Dialog-content ',
 		PICKER_EVENT_SELECT = 'coral-youtubesearch-picker-select',
 		PICKER_EVENT_CONFIRM = 'coral-youtubesearch-picker-confirm',
 

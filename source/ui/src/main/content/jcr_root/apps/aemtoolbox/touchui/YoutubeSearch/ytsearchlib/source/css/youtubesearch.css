@@ -22,10 +22,12 @@
 	margin-top: .4375rem;
 }
 
-.coral-Youtubesearch-picker-backdrop {
+.coral-Youtubesearch-picker-coral-backdrop {
 	z-index: 1441;
 }
-
+.coral-backdrop {
+	z-index: 1441;
+}
 .coral-Youtubesearch-picker {
 	width: 60%;
 	height: 60%;
@@ -36,27 +38,67 @@
 	height: 3.3125rem;
 }
 
-.coral-Youtubesearch-picker .coral-Modal-header .coral-Button {
+.coral-Youtubesearch-picker .coral-Modal-header .coral3-Button {
 	float: left;
 	margin: .4375rem;
 }
-
-.coral-Youtubesearch-picker .coral-Modal-header .coral-Button--primary {
+.coral-Dialog-header {
+	position: relative;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	width: 100%;
+	height: 3.125rem;
+	outline: none;
+}
+.coral3-Dialog	{
+	/* display: block; */
+	/* position: fixed; */
+	/* top: 0; */
+	/* left: 0; */
+	/* right: 0; */
+	/* bottom: 0; */
+	overflow-y: auto;
+	overflow-x: hidden;
+	-webkit-transition: opacity 0.35s;
+	-moz-transition: opacity 0.35s;
+	-o-transition: opacity 0.35s;
+	-ms-transition: opacity 0.35s;
+	transition: opacity 0.35s;
+	opacity: 0;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+	filter: alpha(opacity=0);
+}
+.coral-Youtubesearch-picker .coral3-Dialog-header  {
 	float: right;
 }
 
-.coral-Youtubesearch-picker .coral-Modal-title {
+.coral-Youtubesearch-picker .coral-Heading {
 	margin: 0 4.375rem;
 	text-align: center;
 	line-height: 3.3125rem;
 }
 
-.coral-Youtubesearch-picker .coral-Modal-body {
+.coral-Youtubesearch-picker .coral3-Dialog-content{
 	width: 100%;
 	padding: 0;
 	position: absolute;
 	top: 3.3125rem;
 	bottom: 0;
+}
+.coral-Dialog.is-open {
+	opacity: 1;
+	-ms-filter: none;
+	filter: none;
+}
+.coral3-Dialog-content {
+	display: block;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	padding: .9375rem;
+	outline: none;
+	word-break: break-word;
 }
 
 .coral-Youtubesearch-picker .coral-TabPanel {
@@ -113,4 +155,18 @@
 	margin-top: 30px;
 	margin-bottom: 10px;
 	margin-left: 10px;
+}
+.coral-Dialog-wrapper {
+	display: block;
+	min-width: 20rem;
+	max-width: 90%;
+	margin: .625rem auto;
+	outline: none;
+	border-radius: .25rem;
+	background-color: #fff;
+}
+.coral3-Backdrop.is-open {
+	opacity: 1;
+	-ms-filter: none;
+	filter: none;
 }
