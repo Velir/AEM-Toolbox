@@ -37,12 +37,12 @@
 	height: 3.3125rem;
 }
 
-.coral-Youtubesearch-picker .coral-Modal-header .coral3-Button {
+.coral-Youtubesearch-picker .coral-Modal-header .coral-Button {
 	float: left;
 	margin: .4375rem;
 }
 
-.coral-Youtubesearch-picker .coral-Modal-header .coral3-Button--primary {
+.coral-Youtubesearch-picker .coral-Modal-header .coral-Button--primary {
 	float: right;
 }
 

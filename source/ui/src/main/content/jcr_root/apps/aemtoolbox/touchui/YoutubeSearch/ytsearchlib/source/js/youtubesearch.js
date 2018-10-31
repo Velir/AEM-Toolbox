@@ -5,9 +5,9 @@ window.VelirTouchUI = window.VelirTouchUI || {};
 
 
     // Instance ID counter
-    var youtubesearch_guid = 0;
+    let youtubesearch_guid = 0;
 
-    var CLASS_INPUT = 'js-coral-youtubesearch-input',
+    let CLASS_INPUT = 'js-coral-youtubesearch-input',
         CLASS_BUTTON = 'js-coral-youtubesearch-button',
         CLASS_DISABLED = 'is-disabled',
         CLASS_HIGHLIGHTED = 'is-highlighted',
@@ -17,20 +17,22 @@ window.VelirTouchUI = window.VelirTouchUI || {};
             '</div>'
         ].join(''),
         HTML_PICKER = [
+            '<coral-Dialog>',
             '<div class="coral-Youtubesearch-picker coral-Modal" id="%ID%">',
             '<div class="coral-Modal-header">',
             '<h2 class="coral-Modal-title coral-Heading coral-Heading--2"></h2>',
-            '<button type="button" class="js-coral-youtubesearch-confirm coral3-Button coral3-Button--primary" title="Confirm" is="coral-button" icon="check" iconsize="S" size="M" variant="primary" >',
-            '<coral-icon class="coral3-Icon coral3-Icon--sizeS coral3-Icon--check" icon="check" size="S" role="img" aria-label="check"></coral-icon>',
+            '<button type="button" class="js-coral-youtubesearch-confirm coral-Button coral-Button--square coral-Button--primary" title="Confirm">',
+            '<coral-icon class="coral-Icon coral-Icon--sizeXS coral-Icon--check" icon="check"></coral-icon>',
             '</button>',
-            '<button type="button" class="js-coral-youtubesearch-cancel coral3-Button coral3-Button--secondary" title="Cancel" is="coral-button" icon="close" iconsize="S" size="M" variant="secondary">',
-            '<coral-icon class="coral3-Icon coral3-Icon--sizeS coral3-Icon--close" icon="close" size="S" role="img" aria-label="close"></coral-icon>',
+            '<button type="button" class="js-coral-youtubesearch-cancel coral-Button coral-Button--square coral-Button" title="Cancel">',
+            '<coral-icon class="coral-Icon coral-Icon--sizeXS coral-Icon--close" icon="close"></coral-icon>',
             '</button>',
             '</div>',
             '<div class="coral-Modal-body"></div>',
-            '</div>'
+            '</div>',
+            '</coral-Dialog>'
         ].join(''),
-        HTML_WAIT = '<div class="coral-Wait coral-Wait--large coral-Wait--center"></div>';
+        HTML_WAIT = '<coral-wait><div class="coral-Wait coral-Wait--large coral-Wait--center"></div></coral-wait>';
 
 
     VelirTouchUI.YoutubeSearch = new Class(/** @lends VelirTouchUI.YoutubeSearch# */{
@@ -171,7 +173,7 @@ window.VelirTouchUI = window.VelirTouchUI || {};
 
         /** @ignore */
         _keyUp: function(event) {
-            var key = event.keyCode;
+            let key = event.keyCode;
             if (key === 8) {
                 this.triggeredBackspace = false; // Release the key event
             }
@@ -181,15 +183,15 @@ window.VelirTouchUI = window.VelirTouchUI || {};
         /** @ignore */
         _constructPicker: function() {
             // Create the Picker .coral-Modal, if not already existing in markup
-            var id = "yt-mod-guid-" + this.guid,
+            let id = "yt-mod-guid-" + this.guid,
                 idSel = "#" + id + ".coral-Modal",
                 pickerOptions;
-
-            this.$picker = $('body').find(idSel);
+            let body =$('body');
+            this.$picker = body.find(idSel);
 
             if (this.$picker.length === 0) {
-                $('body').append(HTML_PICKER.replace("%ID%", id));
-                this.$picker = $('body').find(idSel);
+                body.append(HTML_PICKER.replace("%ID%", id));
+                this.$picker = body.find(idSel);
             }
 
             pickerOptions = $.extend({}, this.options, {
@@ -203,8 +205,8 @@ window.VelirTouchUI = window.VelirTouchUI || {};
 
         /** @ignore */
         _clickedPickerButton: function() {
-            var self = this;
-            var $wait;
+            let self = this;
+            let $wait;
 
             if (!self.options.disabled) {
                 // The picker data hasn't loaded; display a loading indicator and disable button until resolution
@@ -238,7 +240,7 @@ window.VelirTouchUI = window.VelirTouchUI || {};
     });
 
 
-    var PICKER_CLASS_CONFIRM = 'js-coral-youtubesearch-confirm',
+    let PICKER_CLASS_CONFIRM = 'js-coral-youtubesearch-confirm',
         PICKER_CLASS_CANCEL = 'js-coral-youtubesearch-cancel',
         PICKER_CLASS_MODAL_BACKDROP = 'coral-youtubesearch-picker-backdrop',
         PICKER_CLASS_MODAL_TITLE = 'coral-Modal-title',
@@ -246,7 +248,7 @@ window.VelirTouchUI = window.VelirTouchUI || {};
         PICKER_EVENT_SELECT = 'coral-youtubesearch-picker-select',
         PICKER_EVENT_CONFIRM = 'coral-youtubesearch-picker-confirm';
 
-    var Picker = new Class(/** @lends Picker# */{
+    let Picker = new Class(/** @lends Picker# */{
         toString: 'Picker',
         extend: CUI.Widget,
 
@@ -268,8 +270,8 @@ window.VelirTouchUI = window.VelirTouchUI || {};
             // Add class to manage layering above other modals (from which the picker may be launched)
             this.modal.backdrop.addClass(PICKER_CLASS_MODAL_BACKDROP);
 
-            var $modalBody = this.$element.find('.' + PICKER_CLASS_MODAL_BODY);
-            var $bodyContent = $(HTML_PICKER_PANE_DEFAULT);
+            let $modalBody = this.$element.find('.' + PICKER_CLASS_MODAL_BODY);
+            let $bodyContent = $(HTML_PICKER_PANE_DEFAULT);
             $modalBody.append($bodyContent);
 
             // Sets up internal selection data structure
@@ -287,32 +289,30 @@ window.VelirTouchUI = window.VelirTouchUI || {};
         },
 
         _constructYTVideoTable: function() {
-            var picker = this.options.element,
+            let picker = this.options.element,
                 pickerPannel = picker.find('.coral-Youtubesearch-pickerPanel'),
                 self = this,
                 videoURL = YOUTUBE_VIDEO_URL.replace("%apiKey%", self.options.apiKey).replace("%playlistID%", self.options.playlistId);
             table = this.$videoTable;
 
             //configure video table
-            table.selectionMode = 'row';
             table.scrollHeight = 50;
+            table.selectable = true;
 
 
             $.getJSON(videoURL, function (data) {
 
-
-                //self._constructYTVideoTableHeader.call(self);
                 self._constructYTVideoTableBody.call(self, data);
 
             });
 
-
+            this._setupListeners();
             pickerPannel.append(table);
         },
 
         _constructYTVideoTableHeader: function () {
 
-            var tableHead = new Coral.Table.Head(),
+            let tableHead = new Coral.Table.Head(),
                 headers = ['Video Image','Video Description'],
                 self = this,
                 table = self.$videoTable,
@@ -320,7 +320,7 @@ window.VelirTouchUI = window.VelirTouchUI || {};
 
             tableHead.sticky = true;
             headers.forEach(function(headerValue) {
-                var headerCell = new Coral.Table.HeaderCell();
+                let headerCell = new Coral.Table.HeaderCell();
                 headerCell.append(headerValue);
                 tableHRow.append(headerCell);
             });
@@ -331,7 +331,7 @@ window.VelirTouchUI = window.VelirTouchUI || {};
 
         _constructYTVideoTableBody: function (data) {
 
-            var self = this,
+            let self = this,
                 table = self.$videoTable,
                 selectedVideoId = self.inputValue,
                 videoItems = data.items;
@@ -339,7 +339,7 @@ window.VelirTouchUI = window.VelirTouchUI || {};
             table.items.clear();
 
             videoItems.forEach(function (item) {
-                var tableRow = new Coral.Table.Row(),
+                let tableRow = new Coral.Table.Row(),
                     videoContent = item.snippet,
                     description = videoContent.description,
                     videoTitle = videoContent.title,
@@ -355,7 +355,7 @@ window.VelirTouchUI = window.VelirTouchUI || {};
 
                 imageTableCell.innerHTML = IMAGE_HTML_ELEMENT.replace("%url%", videoImgUrl).replace("%videoId%", videoId);
                 tableRow.append(imageTableCell);
-
+                tableRow.multiple =false;
                 descriptionTableCell.innerHTML = DESCRIPTION_HTML_ELEMENT.replace("%videoTitle%", videoTitle).replace("%videoDescription%", description);
                 tableRow.append(descriptionTableCell);
                 table.items.add(tableRow);
@@ -374,7 +374,7 @@ window.VelirTouchUI = window.VelirTouchUI || {};
          or rejected if the data fails to load.
          */
         startup: function(inputValue) {
-            var deferred = $.Deferred(), cv,
+            let deferred = $.Deferred(), cv,
                 self = this,
                 onDataLoaded = function() {
                     self._renderPicker();
@@ -423,34 +423,34 @@ window.VelirTouchUI = window.VelirTouchUI || {};
 
         /** @ignore */
         _setupListeners: function() {
-            var self = this;
+            let self = this;
 
             self.$videoTable.on('coral-table:change', self._getSelectedVideo.bind(self));
             self.$cancel.on('click', self._takeDown.bind(self));
             self.$confirm.on('click', self._selectionConfirmed.bind(self));
             self.$element.on(PICKER_EVENT_SELECT, function(event) {
-                var selection = (event.selectedValue) ? event.selectedValue : [];
+                let selection = (event.selectedItem) ? event.selectedItem : [];
 
                 self._handleSelection.call(self, selection);
             });
         },
 
         _getSelectedVideo: function(event) {
-            var selection = event.detail.selection;
+            let selection = event.detail.selection;
 
             if (selection && $(selection).length > 0) {
                 //this._selection = $(selection)[0].$.find("img").data("videoId");
                 //this._selection = $(selection)[0].find("img").data("videoId");
-                this._selection =$(selection)[0].firstElementChild.children[0].dataset.videoId;
+                this._selection = $(selection).find("img").data("videoId");
             }
 
         },
 
         /** @ignore */
         _itemSelected: function(event) {
-            var selection = this._getSelectedValue(true);
+            let selection = this._getSelectedValue(true);
 
-            this.$element.trigger($.Event(PICKER_EVENT_SELECT, { "selectedValue": selection }));
+            this.$element.trigger($.Event(PICKER_EVENT_SELECT, { "selectedItem": selection }));
         },
 
         /** @ignore */
@@ -460,8 +460,8 @@ window.VelirTouchUI = window.VelirTouchUI || {};
 
         /** @ignore */
         _updateConfirm: function () {
-            var selection = this._getSelection();
-            var hasSelection = (selection && selection.length > 0);
+            let selection = this._getSelection();
+            let hasSelection = (selection && selection.length > 0);
             this._enableConfirm(hasSelection);
         },
 
@@ -472,7 +472,7 @@ window.VelirTouchUI = window.VelirTouchUI || {};
 
         /** @ignore */
         _getSelection: function() {
-            var selection = this._selection;
+            let selection = this._selection;
             return selection;
         },
 
@@ -484,7 +484,7 @@ window.VelirTouchUI = window.VelirTouchUI || {};
 
         /** @ignore */
         _selectionConfirmed: function() {
-            var selection = this._getSelection();
+            let selection = this._getSelection();
 
             this.$element.trigger($.Event(PICKER_EVENT_CONFIRM, { "selectedValue": selection }));
             this._takeDown();
