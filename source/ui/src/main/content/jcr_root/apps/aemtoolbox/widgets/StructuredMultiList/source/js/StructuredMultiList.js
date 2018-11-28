@@ -217,7 +217,7 @@ AEM.Toolbox.Widgets.StructuredMultiList = CQ.Ext.extend(CQ.form.Slideshow, {
 
 			//if our slide hasn't been deleted then set our sort order
 			//and increment for the next slide
-			if (!slide.isDeleted) {
+			if ((slide != undefined) && (!slide.isDeleted)) {
 				slide.sortOrder = slideSortOrder;
 				slideSortOrder++;
 			}
@@ -477,7 +477,7 @@ AEM.Toolbox.Widgets.StructuredMultiList = CQ.Ext.extend(CQ.form.Slideshow, {
 			var slide = this.slides[i];
 
 			//if our slide hasn't been deleted then it should be shown in our combobox
-			if (!slide.isDeleted) {
+			if ((slide != undefined) && (!slide.isDeleted)) {
 				//get the display text for this slide
 				var displayText = slide.createDisplayText();
 
@@ -776,7 +776,7 @@ AEM.Toolbox.Widgets.StructuredMultiList = CQ.Ext.extend(CQ.form.Slideshow, {
 		var slideCnt = this.slides.length;
 		for (var slideIndex = 0; slideIndex < slideCnt; slideIndex++) {
 			var slide = this.slides[slideIndex];
-			if (!slide.isDeleted && !slide.isValid) {
+			if ((slide != undefined) && (!slide.isDeleted) && !slide.isValid) {
 				return slide;
 			}
 		}
@@ -838,7 +838,7 @@ AEM.Toolbox.Widgets.StructuredMultiList = CQ.Ext.extend(CQ.form.Slideshow, {
 		var slideCnt = this.slides.length;
 		for (var slideIndex = 0; slideIndex < slideCnt; slideIndex++) {
 			var slide = this.slides[slideIndex];
-			if (!slide.isDeleted) {
+			if ((slide != undefined) && (!slide.isDeleted)) {
 				validSlideCount++;
 			}
 		}
