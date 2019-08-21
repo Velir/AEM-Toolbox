@@ -3,6 +3,7 @@ package com.aem.toolbox.servlet.image;
 import java.awt.*;
 import java.io.IOException;
 import javax.jcr.RepositoryException;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
 import com.day.cq.commons.ImageHelper;
@@ -197,7 +198,16 @@ public class ImageServlet extends AbstractImageServlet {
 		}
 		resp.setContentType(mimeType);
 		double quality = mimeType.equals("image/gif") ? 255 : 1.0;
-		layer.write(mimeType, quality, resp.getOutputStream());
+		ServletOutputStream out = resp.getOutputStream();
+		if(isProgressive(mimeType, image)){
+			ProgressiveJpeg.write(layer, quality, out);
+		} else {
+			layer.write(mimeType, quality, out);
+		}
+	}
+
+	private boolean isProgressive(String mimeType, Image image) {
+		return "image/jpeg".equals(mimeType) || "image/jpg".equals(mimeType);
 	}
 
 
