@@ -24,10 +24,10 @@
 	</licenses>
 
 	<scm>
-		<connection>scm:git:git@github.com:Velir/AEM-Toolbox.git</connection>
-		<developerConnection>scm:git:git@github.com:Velir/AEM-Toolbox.git</developerConnection>
+		<connection>scm:git:git@bitbucket.org:rwjf-webtech/AEM-Toolbox.git</connection>
+		<developerConnection>scm:git:git@bitbucket.org:rwjf-webtech/AEM-Toolbox.git</developerConnection>
 		<tag>HEAD</tag>
-		<url>https://github.com/Velir/AEM-Toolbox</url>
+		<url>https://bitbucket.org/rwjf-webtech/aem-toolbox/src/master/</url>
 	</scm>
 
 	<repositories>
@@ -42,12 +42,12 @@
 		<repository>
 			<id>deploy-velir-internal</id>
 			<name>Velir Internal Archiva Repository</name>
-			<url>http://archiva.rwjf.velir.com:8080/repository/internal</url>
+			<url>https://nexus.rwjf.cloud/repository/deploy-rwjf-release/</url>
 		</repository>
 		<snapshotRepository>
 			<id>deploy-velir-snapshots</id>
 			<name>Velir Internal Archiva Repository</name>
-			<url>http://archiva.rwjf.velir.com:8080/repository/snapshots</url>
+			<url>https://nexus.rwjf.cloud/repository/deploy-rwjf-snapshot/</url>
 		</snapshotRepository>
 	</distributionManagement>
 
