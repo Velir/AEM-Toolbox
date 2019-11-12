@@ -5,6 +5,6 @@
 -->
 <workspaceFilter vesion="1.0">
 	<filter root="/apps/aemtoolbox" />
-	<filter root="/etc/clientlibs/aemtoolbox" />
+	<filter root="/apps/aemtoolbox/clientlibs/aemtoolbox" />
 	<filter root="/etc/designs/aemtoolbox" />
 </workspaceFilter>
