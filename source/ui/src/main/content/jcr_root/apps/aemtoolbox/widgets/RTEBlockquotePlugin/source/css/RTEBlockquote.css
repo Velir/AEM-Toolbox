@@ -1,12 +1,12 @@
 #CQ .x-html-editor-tb .x-edit-blockquote{
-	background-image: url(/etc/designs/aemtoolbox/images/icons/blockquote.png);
+	background-image: url(/apps/aemtoolbox/widgets/RTEBlockquotePlugin/img/blockquote.png);
 	background-position: 1px 2px;
 }
 #CQ .x-html-editor-tb .x-edit-linedblockquote{
-    background-image: url(/etc/designs/aemtoolbox/images/icons/lined-blockquote.png);
+    background-image: url(/apps/aemtoolbox/widgets/RTEBlockquotePlugin/img/lined-blockquote.png);
     background-position: 1px 2px;
 }
 #CQ .x-html-editor-tb .x-edit-ulinedblockquote{
-    background-image: url(/etc/designs/aemtoolbox/images/icons/introduction.png);
+    background-image: url(/apps/aemtoolbox/widgets/RTEBlockquotePlugin/img/introduction.png);
     background-position: 1px 2px;
 }
