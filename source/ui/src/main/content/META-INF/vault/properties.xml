@@ -4,7 +4,7 @@
 <comment>FileVault Package Properties</comment>
 <entry key="createdBy">admin</entry>
 <entry key="name">aem-toolbox-ui</entry>
-<entry key="version">2.0.2</entry>
+<entry key="version">2.0.3-SNAPSHOT</entry>
 <entry key="packageType">mixed</entry>
 <entry key="dependencies"/>
 <entry key="packageFormatVersion">2</entry>
